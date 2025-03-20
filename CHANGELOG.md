@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.0.0...v1.0.1) (2025-03-20)
+
+
+### Bug Fixes
+
+* 修复github pages base路径不对问题 ([c60627e](https://github.com/bosens-China/xiaomi-photography/commit/c60627e3d7c8c3b37de090daf8802acf6b02040c))
+* 修复github pages下pdf文件无法预览问题 ([aa12001](https://github.com/bosens-China/xiaomi-photography/commit/aa120017779d903e0ccaf9f1d2c55f8db3eb17ae))
+
 ## 1.0.0 (2025-03-20)
 
 
