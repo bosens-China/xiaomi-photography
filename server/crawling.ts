@@ -8,6 +8,11 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+console.log({
+  __dirname,
+  cwd: process.cwd(),
+});
+
 export interface Root {
   msg: string;
   code: number;
