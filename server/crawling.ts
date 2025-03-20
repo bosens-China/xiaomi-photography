@@ -91,6 +91,8 @@ const main = async () => {
   const pdfUrl = `${date}.pdf`;
   const pdfPath = path.join(__dirname, `../public/${pdfUrl}`);
 
+  // 确保目录存在
+  await fs.ensureDir(path.dirname(pdfPath));
   doc.pipe(fs.createWriteStream(pdfPath));
 
   const picUrls = await getHotPic();
