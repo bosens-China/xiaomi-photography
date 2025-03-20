@@ -4,6 +4,9 @@ import path from "path";
 import PDFDocument from "pdfkit";
 import dayjs from "dayjs";
 import { retry } from "./utils/retry";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export interface Root {
   msg: string;
@@ -37,7 +40,7 @@ export interface List {
   height?: number;
 }
 
-const FONT_PATH = path.join(process.cwd(), "./server/微软雅黑.ttf");
+const FONT_PATH = path.join(__dirname, "./微软雅黑.ttf");
 
 /*
  * 获取热门图片
@@ -70,7 +73,7 @@ const savePic = async (url: string) => {
   });
   const buffer = Buffer.from(data, "binary");
   const fileName = url.split("/").pop()!;
-  const dirPath = path.join(process.cwd(), "./src/assets/photo");
+  const dirPath = path.join(__dirname, "../src/assets/photo");
   const filePath = path.join(dirPath, fileName);
   await fs.outputFile(filePath, buffer);
   return filePath;
@@ -81,7 +84,7 @@ const main = async () => {
   doc.registerFont("MSYH", FONT_PATH);
   const date = dayjs().format("YYYY-MM-DD");
   const pdfUrl = `${date}.pdf`;
-  const pdfPath = path.join(process.cwd(), `./public/${pdfUrl}`);
+  const pdfPath = path.join(__dirname, `../public/${pdfUrl}`);
 
   doc.pipe(fs.createWriteStream(pdfPath));
 
@@ -117,13 +120,13 @@ const main = async () => {
 
   doc.end();
   await fs.outputJSON(
-    path.join(process.cwd(), "./src/assets/photo.json"),
+    path.join(__dirname, "../src/assets/photo.json"),
     picUrls
   );
   console.log(`完成 ${pdfPath}`);
 
   await fs.outputJSON(
-    path.join(process.cwd(), "./src/assets/transplant-information.json"),
+    path.join(__dirname, "../src/assets/transplant-information.json"),
     {
       __APP_PDFURL: `/${pdfUrl}`,
       __APP_DATE: dayjs().format("MM-DD"),
