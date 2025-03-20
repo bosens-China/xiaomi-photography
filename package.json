@@ -1,0 +1,44 @@
+{
+  "name": "xiaomi-photography",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "crawling": "tsx ./server/crawling.ts"
+  },
+  "dependencies": {
+    "@ant-design/icons-vue": "^7.0.1",
+    "@unocss/reset": "66.1.0-beta.6",
+    "@vueuse/core": "^13.0.0",
+    "axios": "^1.8.4",
+    "dayjs": "^1.11.13",
+    "fs-extra": "^11.3.0",
+    "pdfkit": "^0.16.0",
+    "vue": "^3.5.13"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/pdfkit": "^0.13.9",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "@vue/tsconfig": "^0.7.0",
+    "eslint": "^9.22.0",
+    "eslint-plugin-check-file": "^3.1.0",
+    "eslint-plugin-vue": "^10.0.0",
+    "globals": "^16.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "~5.7.2",
+    "typescript-eslint": "^8.27.0",
+    "unocss": "66.1.0-beta.6",
+    "vite": "^6.2.0",
+    "vue-tsc": "^2.2.4"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  }
+}
