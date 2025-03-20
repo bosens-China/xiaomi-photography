@@ -81,7 +81,7 @@ const main = async () => {
   doc.registerFont("MSYH", FONT_PATH);
   const date = dayjs().format("YYYY-MM-DD");
   const pdfUrl = `${date}.pdf`;
-  const pdfPath = path.join(process.cwd(), "public", pdfUrl);
+  const pdfPath = path.join(process.cwd(), `./public/${pdfUrl}`);
 
   doc.pipe(fs.createWriteStream(pdfPath));
 
