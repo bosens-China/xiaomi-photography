@@ -9,7 +9,8 @@ import { dependencies } from "./package.json";
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
-  const base = command === "build" ? "/xiaomi-photography/" : "/";
+  const base =
+    command === "build" && !process.env.vercel ? "/xiaomi-photography/" : "/";
   return {
     plugins: [vue(), UnoCSS()],
     server: {
