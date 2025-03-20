@@ -8,34 +8,37 @@ import {
 import { dependencies } from "./package.json";
 
 // https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue(), UnoCSS()],
-  server: {
-    port: 4441,
-  },
-  define: {
-    __APP_PDFURL: JSON.stringify(__APP_PDFURL),
-    __APP_DATE: JSON.stringify(__APP_DATE),
-  },
-  build: {
-    rollupOptions: {
-      output: {
-        // 拆包，不要打成一个文件
-        manualChunks: {
-          ...Object.keys(dependencies)
-            .filter(
-              (f) =>
-                ![
-                  "@unocss",
-                  //  '@iconify-json', 'antd'
-                ].find((item) => f.startsWith(item))
-            )
-            .reduce((chunks, name) => {
-              chunks[name] = [name];
-              return chunks;
-            }, {} as Record<string, [string]>),
+export default defineConfig(({ command }) => {
+  return {
+    plugins: [vue(), UnoCSS()],
+    server: {
+      port: 4441,
+    },
+    base: command === "build" ? "/xiaomi-photography/" : "/",
+    define: {
+      __APP_PDFURL: JSON.stringify(__APP_PDFURL),
+      __APP_DATE: JSON.stringify(__APP_DATE),
+    },
+    build: {
+      rollupOptions: {
+        output: {
+          // 拆包，不要打成一个文件
+          manualChunks: {
+            ...Object.keys(dependencies)
+              .filter(
+                (f) =>
+                  ![
+                    "@unocss",
+                    //  '@iconify-json', 'antd'
+                  ].find((item) => f.startsWith(item))
+              )
+              .reduce((chunks, name) => {
+                chunks[name] = [name];
+                return chunks;
+              }, {} as Record<string, [string]>),
+          },
         },
       },
     },
-  },
+  };
 });
