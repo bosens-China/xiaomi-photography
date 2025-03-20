@@ -9,14 +9,15 @@ import { dependencies } from "./package.json";
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
+  const base = command === "build" ? "/xiaomi-photography/" : "/";
   return {
     plugins: [vue(), UnoCSS()],
     server: {
       port: 4441,
     },
-    base: command === "build" ? "/xiaomi-photography/" : "/",
+    base,
     define: {
-      __APP_PDFURL: JSON.stringify(__APP_PDFURL),
+      __APP_PDFURL: JSON.stringify(base + __APP_PDFURL),
       __APP_DATE: JSON.stringify(__APP_DATE),
     },
     build: {

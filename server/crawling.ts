@@ -130,7 +130,7 @@ const main = async () => {
   await fs.outputJSON(
     path.join(__dirname, "../src/assets/transplant-information.json"),
     {
-      __APP_PDFURL: `/${pdfUrl}`,
+      __APP_PDFURL: `${pdfUrl}`,
       __APP_DATE: dayjs().format("MM-DD"),
     }
   );
