@@ -3,8 +3,8 @@ import fs from "fs-extra";
 import path from "path";
 import PDFDocument from "pdfkit";
 import dayjs from "dayjs";
-import { retry } from "./utils/retry";
 import { fileURLToPath } from "node:url";
+import { scheduler } from "./utils/scheduler";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -73,9 +73,9 @@ const savePic = async (url: string) => {
   });
   const buffer = Buffer.from(data, "binary");
   const fileName = url.split("/").pop()!;
-  const dirPath = path.join(__dirname, "../src/assets/photo");
+  const dirPath = path.join(__dirname, "./photo");
   const filePath = path.join(dirPath, fileName);
-  await fs.outputFile(filePath, buffer);
+  await fs.outputFile(filePath, buffer as Uint8Array);
   return filePath;
 };
 
@@ -99,11 +99,16 @@ const main = async () => {
     return height! > max ? height! : max;
   }, 0);
 
-  for (let i = 0; i < picUrls.length; i++) {
-    const picUrl = picUrls[i];
+  const filePaths = await scheduler(
+    picUrls.map((f) => () => savePic(f.picUrl)),
+    {
+      onChange({ executed }) {
+        console.log(`当前进度：${executed}/${picUrls.length}`);
+      },
+    }
+  );
 
-    const filePath = await retry(() => savePic(picUrl.picUrl));
-
+  filePaths.forEach((filePath) => {
     // 创建新页面并设置尺寸
     doc.addPage({
       size: [maxWidth, maxHeight + 100],
@@ -116,9 +121,7 @@ const main = async () => {
       align: "center",
       valign: "center",
     });
-
-    console.log(`当前进度 ${i + 1}/${picUrls.length}`);
-  }
+  });
 
   doc.end();
   await fs.outputJSON(

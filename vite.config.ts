@@ -13,6 +13,11 @@ export default defineConfig(({ command }) => {
     command === "build" && !process.env.vercel ? "/xiaomi-photography/" : "/";
   return {
     plugins: [vue(), UnoCSS()],
+    resolve: {
+      alias: {
+        "@": "/src",
+      },
+    },
     server: {
       port: 4441,
     },

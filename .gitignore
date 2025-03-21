@@ -25,6 +25,6 @@ dist-ssr
 
 # 忽略爬取的资源
 src/assets/photo.json
-src/assets/photo
+server/photo
 src/assets/transplant-information.json
 public/*.pdf

@@ -3,9 +3,9 @@ import pluginJs from "@eslint/js";
 import tseslint from "typescript-eslint";
 import pluginVue from "eslint-plugin-vue";
 import checkFile from "eslint-plugin-check-file";
+import { defineConfig } from "eslint/config";
 
-/** @type {import('eslint').Linter.Config[]} */
-export default [
+export default defineConfig([
   { files: ["**/*.{js,mjs,cjs,ts,vue}"] },
   { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
   pluginJs.configs.recommended,
@@ -32,13 +32,15 @@ export default [
     },
   },
   {
-    // 声明全局变量
-    globals: {
-      __APP_PDFURL: "readonly",
-      __APP_DATE: "readonly",
+    languageOptions: {
+      // 声明全局变量
+      globals: {
+        __APP_PDFURL: "readonly",
+        __APP_DATE: "readonly",
+      },
     },
     rules: {
       "vue/multi-word-component-names": "off",
     },
   },
-];
+]);
