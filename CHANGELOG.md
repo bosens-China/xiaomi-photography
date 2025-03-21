@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.0.1...v1.1.0) (2025-03-21)
+
+
+### Features
+
+* 对ci流程优化，新增分享和详情图片查看，对布局字体大小调整 ([35ca85b](https://github.com/bosens-China/xiaomi-photography/commit/35ca85b1ca7c85901851d0ee2b7813a1f68ae4c9))
+
 ## [1.0.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.0.0...v1.0.1) (2025-03-20)
 
 
