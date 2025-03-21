@@ -7,8 +7,9 @@ import { useIntersectionObserver } from "@vueuse/core";
 const props = defineProps<List>();
 
 const target = useTemplateRef<HTMLImageElement>("el");
-const onError = () => {
-  target.value!.src = props.picUrl;
+const onError = (e: Event) => {
+  const img = e.target as HTMLImageElement;
+  img.src = props.picUrl;
 };
 
 const targetIsVisible = ref(false);

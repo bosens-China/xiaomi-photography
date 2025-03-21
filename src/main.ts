@@ -15,6 +15,14 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  scrollBehavior(_to, _from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition;
+    }
+    return {
+      top: 0,
+    };
+  },
 });
 
 createApp(App).use(router).mount("#app");

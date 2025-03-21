@@ -14,7 +14,7 @@ watchEffect(() => {
   switch (activeBreakpoint.value) {
     case "laptop":
     case "desktop":
-      html.style.fontSize = `34px`;
+      html.style.fontSize = `22px`;
       return;
 
     // case "desktop":
@@ -25,5 +25,9 @@ watchEffect(() => {
 </script>
 
 <template>
-  <router-view />
+  <router-view v-slot="{ Component }">
+    <keep-alive :include="['Home']">
+      <component :is="Component" />
+    </keep-alive>
+  </router-view>
 </template>
