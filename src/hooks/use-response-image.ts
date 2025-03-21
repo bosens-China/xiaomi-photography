@@ -8,17 +8,19 @@ export const useResponseImage = () => {
 
   const { width } = useWindowSize();
 
-  const img = computed(() => {
+  const w = computed(() => {
     switch (activeBreakpoint.value) {
       case "laptop":
       case "desktop":
-        return "";
+        return Math.ceil(width.value / 100) * 100;
 
       default:
-        return `?thumb=1&w=${
-          Math.ceil((width.value * pixelRatio.value) / 100) * 100
-        }`;
+        return Math.ceil((width.value * pixelRatio.value) / 100) * 100;
     }
+  });
+
+  const img = computed(() => {
+    return `?thumb=1&w=${w.value}`;
   });
   return img;
 };
