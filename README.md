@@ -4,7 +4,8 @@
 
 项目的素材来源于 [小米徕卡影像大赛](https://www.mi.com/visual/award/workList?type=imageCiTiao)
 
-![alt text](image.png)
+<img src="./image.png" style="max-width: 500px" />
+<img src="./image-1.png" style="max-width: 500px" />
 
 ## 协议
 

@@ -8,6 +8,8 @@ import { createWebHashHistory, createRouter } from "vue-router";
 const routes = [
   { path: "/", component: () => import("@/pages/home.vue") },
   { path: "/preview/:id", component: () => import("@/pages/preview.vue") },
+  // 404，重定向首页
+  { path: "/:catchAll(.*)", redirect: "/" },
 ];
 
 const router = createRouter({

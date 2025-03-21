@@ -3,20 +3,13 @@ import photo from "@/assets/photo.json";
 import Card from "@/components/card.vue";
 import type { List } from "../../server/crawling";
 import { useWindowSize } from "@vueuse/core";
-import { computed, watchEffect } from "vue";
-import { useBreakpoints } from "@vueuse/core";
+import { computed } from "vue";
 import Head from "@/components/head.vue";
-
-const breakpoints = useBreakpoints({
-  mobile: 0, // optional
-  tablet: 640,
-  laptop: 1024,
-  desktop: 1280,
-});
+import useScreen from "@/hooks/use-screen";
+import { useResponseImage } from "@/hooks/use-response-image";
 
 const { width } = useWindowSize();
-
-const activeBreakpoint = breakpoints.active();
+const { activeBreakpoint } = useScreen();
 
 // 列数
 const columns = computed(() => {
@@ -50,24 +43,7 @@ const columnsData = computed(() => {
 const pdfUrl = __APP_PDFURL;
 const date = __APP_DATE;
 
-// 根据尺寸不同，给html设置不同大小字体
-watchEffect(() => {
-  const html = document.querySelector("html");
-  if (!html) {
-    return;
-  }
-  html.style.fontSize = "";
-  switch (activeBreakpoint.value) {
-    case "laptop":
-    case "desktop":
-      html.style.fontSize = `34px`;
-      return;
-
-    // case "desktop":
-    //   html.style.fontSize = `${Math.max(Math.floor(width.value / 34), 50)}px`;
-    //   return;
-  }
-});
+const suffix = useResponseImage();
 </script>
 
 <template>
@@ -80,7 +56,13 @@ watchEffect(() => {
 
       <template #right>
         <div class="text-size-2xl flex items-center">
-          <a :href="pdfUrl" target="_blank" v-if="pdfUrl" class="mr-3">
+          <a
+            :href="pdfUrl"
+            target="_blank"
+            v-if="pdfUrl"
+            class="mr-3"
+            title="访问pdf文件"
+          >
             <div class="i-vscode-icons-file-type-pdf2"></div>
           </a>
           <a
@@ -101,7 +83,12 @@ watchEffect(() => {
         v-for="(column, index) of columnsData"
         :key="index"
       >
-        <Card v-for="item of column" v-bind="item" :key="item.id"></Card>
+        <Card
+          v-for="item of column"
+          v-bind="item"
+          :key="item.id"
+          :pic-url="item.picUrl + suffix"
+        ></Card>
       </div>
     </div>
   </div>

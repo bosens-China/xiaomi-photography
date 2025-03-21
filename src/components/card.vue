@@ -1,14 +1,28 @@
 <script setup lang="ts">
-import { useTemplateRef, type ImgHTMLAttributes } from "vue";
+import { useTemplateRef, ref, computed } from "vue";
 import type { List } from "../../server/crawling";
 import { RouterLink } from "vue-router";
+import { useIntersectionObserver } from "@vueuse/core";
 
 const props = defineProps<List>();
 
-const ref = useTemplateRef<ImgHTMLAttributes>("el");
+const target = useTemplateRef<HTMLImageElement>("el");
 const onError = () => {
-  ref.value!.src = props.picUrl;
+  target.value!.src = props.picUrl;
 };
+
+const targetIsVisible = ref(false);
+
+useIntersectionObserver(target, ([entry]) => {
+  targetIsVisible.value = entry?.isIntersecting || false;
+});
+
+const imgSrc = computed(() => {
+  if (targetIsVisible.value) {
+    return props.picUrl;
+  }
+  return "";
+});
 </script>
 
 <template>
@@ -20,11 +34,13 @@ const onError = () => {
       }"
     >
       <img
-        :src="picUrl"
-        class="w-100% h-auto"
+        :src="imgSrc"
+        class="w-100%"
         @error="onError"
         ref="el"
         :alt="desc"
+        :width="width"
+        :height="height"
         loading="lazy"
       />
       <div class="p-3">

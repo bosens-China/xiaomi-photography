@@ -57,7 +57,12 @@ const onBack = () => {
         {{ item?.desc }}
       </div>
       <div>
-        <img :src="item?.picUrl" class="object-cover" />
+        <img
+          :src="item?.picUrl"
+          class="object-cover"
+          :width="item?.width"
+          :height="item?.height"
+        />
       </div>
     </div>
   </div>
