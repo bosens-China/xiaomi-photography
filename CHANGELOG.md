@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.2...v1.2.0) (2025-03-22)
+
+
+### Features
+
+* 添加九宫格辅助线 ([805a553](https://github.com/bosens-China/xiaomi-photography/commit/805a553e7f43213e045a700e266e03a2034474df))
+
 ## [1.1.2](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.1...v1.1.2) (2025-03-22)
 
 
