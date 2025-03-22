@@ -1,10 +1,11 @@
-import axios from "axios";
-import fs from "fs-extra";
-import path from "path";
-import PDFDocument from "pdfkit";
-import dayjs from "dayjs";
-import { fileURLToPath } from "node:url";
-import { scheduler } from "./utils/scheduler";
+import axios from 'axios';
+import fs from 'fs-extra';
+import path from 'path';
+import PDFDocument from 'pdfkit';
+import dayjs from 'dayjs';
+import { fileURLToPath } from 'node:url';
+import { scheduler } from './utils/scheduler';
+import { getImageSize, getImageSizeUrl } from './utils/image-size';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -40,7 +41,7 @@ export interface List {
   height?: number;
 }
 
-const FONT_PATH = path.join(__dirname, "./微软雅黑.ttf");
+const FONT_PATH = path.join(__dirname, './微软雅黑.ttf');
 
 /*
  * 获取热门图片
@@ -51,15 +52,15 @@ const getHotPic = async () => {
     [
       {},
       {
-        topic: "",
+        topic: '',
         page: 1,
         pageSize: 50,
         sort: 0,
-        classes: "imageCiTiao",
+        classes: 'imageCiTiao',
         internal: false,
-        actId: "",
+        actId: '',
       },
-    ]
+    ],
   );
   return data.data.list;
 };
@@ -69,11 +70,12 @@ const getHotPic = async () => {
  */
 const savePic = async (url: string) => {
   const { data } = await axios.get(url, {
-    responseType: "arraybuffer",
+    responseType: 'arraybuffer',
   });
-  const buffer = Buffer.from(data, "binary");
-  const fileName = url.split("/").pop()!;
-  const dirPath = path.join(__dirname, "./photo");
+  const buffer = Buffer.from(data, 'binary');
+  const parsedUrl = new URL(url); // 使用URL对象解析URL
+  const fileName = path.basename(parsedUrl.pathname); // 从pathname中获取文件名
+  const dirPath = path.join(__dirname, './photo');
   const filePath = path.join(dirPath, fileName);
   await fs.outputFile(filePath, buffer as Uint8Array);
   return filePath;
@@ -81,8 +83,8 @@ const savePic = async (url: string) => {
 
 const main = async () => {
   const doc = new PDFDocument({ autoFirstPage: false });
-  doc.registerFont("MSYH", FONT_PATH);
-  const date = dayjs().format("YYYY-MM-DD");
+  doc.registerFont('MSYH', FONT_PATH);
+  const date = dayjs().format('YYYY-MM-DD');
   const pdfUrl = `${date}.pdf`;
   const pdfPath = path.join(__dirname, `../public/${pdfUrl}`);
 
@@ -91,51 +93,76 @@ const main = async () => {
   doc.pipe(fs.createWriteStream(pdfPath));
 
   const picUrls = await getHotPic();
-
-  const maxWidth = picUrls.reduce((max, { width }) => {
-    return width! > max ? width! : max;
-  }, 0);
-  const maxHeight = picUrls.reduce((max, { height }) => {
-    return height! > max ? height! : max;
-  }, 0);
+  // 固定为A4纸
+  const maxWidth = 595;
 
   const filePaths = await scheduler(
-    picUrls.map((f) => () => savePic(f.picUrl)),
+    // 直接拉取指定宽度格式的图片,*2是为了图片更清晰
+    picUrls.map((f) => () => savePic(f.picUrl + `?thumb=1&w=${maxWidth * 2}`)),
     {
       onChange({ executed }) {
         console.log(`当前进度：${executed}/${picUrls.length}`);
       },
-    }
+    },
   );
 
-  filePaths.forEach((filePath) => {
-    // 创建新页面并设置尺寸
-    doc.addPage({
-      size: [maxWidth, maxHeight + 100],
-      margin: 0,
-    });
+  for (let index = 0; index < filePaths.length; index++) {
+    const filePath = filePaths[index];
+    const { width, height, picUrl } = picUrls[index];
+    if (width && height) {
+      const scale = width / maxWidth;
+      const maxHeight = Math.ceil(height / scale);
+
+      // 创建新页面并设置尺寸
+      doc.addPage({
+        size: [maxWidth, maxHeight],
+        margin: 0,
+      });
+    } else {
+      const result = await getImageSize(filePath);
+      if (!result) {
+        doc.addPage({
+          size: 'a4',
+          margin: 0,
+        });
+      } else {
+        // 修订尺寸，因为有可能下载的图片依然不对
+        const scale = result.width / maxWidth;
+        const h = Math.ceil(result.height / scale);
+        doc.addPage({
+          size: [maxWidth, h],
+          margin: 0,
+        });
+      }
+      const imgResult = await getImageSizeUrl(picUrl);
+
+      // 如果存在修正数据，后面会输出到json文件
+      picUrls[index].width = imgResult.width;
+      picUrls[index].height = imgResult.height;
+    }
 
     // 添加图片（自动适应页面）
     doc.image(filePath, 0, 0, {
       fit: [doc.page.width, doc.page.height],
-      align: "center",
-      valign: "center",
+      align: 'center',
+      valign: 'center',
     });
-  });
+  }
 
   doc.end();
   await fs.outputJSON(
-    path.join(__dirname, "../src/assets/photo.json"),
-    picUrls
+    path.join(__dirname, '../src/assets/photo.json'),
+    picUrls,
+    { spaces: 2 },
   );
   console.log(`完成 ${pdfPath}`);
 
   await fs.outputJSON(
-    path.join(__dirname, "../src/assets/transplant-information.json"),
+    path.join(__dirname, '../src/assets/transplant-information.json'),
     {
       __APP_PDFURL: `${pdfUrl}`,
-      __APP_DATE: dayjs().format("MM-DD"),
-    }
+      __APP_DATE: dayjs().format('MM-DD'),
+    },
   );
 };
 
