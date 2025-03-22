@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.0...v1.1.1) (2025-03-21)
+
+
+### Performance Improvements
+
+* 对平板和电脑首屏尺寸优化 ([51940f8](https://github.com/bosens-China/xiaomi-photography/commit/51940f8b5b51e5c012fcc6349c4592768b4091d5))
+
 ## [1.1.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.0.1...v1.1.0) (2025-03-21)
 
 
