@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.2](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.1...v1.1.2) (2025-03-22)
+
+
+### Performance Improvements
+
+* 对爬取pdf尺寸优化，对json丢失的w、h信息补充，对ci的每天爬取时间新增多列 ([f2b573c](https://github.com/bosens-China/xiaomi-photography/commit/f2b573c82da62809570aebe9a750f7c745b86351))
+
 ## [1.1.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.0...v1.1.1) (2025-03-21)
 
 
