@@ -1,21 +1,22 @@
-import { defineConfig } from "vite";
-import vue from "@vitejs/plugin-vue";
-import UnoCSS from "unocss/vite";
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import UnoCSS from 'unocss/vite';
 import {
   __APP_DATE,
   __APP_PDFURL,
-} from "./src/assets/transplant-information.json";
-import { dependencies } from "./package.json";
+} from './src/assets/transplant-information.json';
+import { dependencies } from './package.json';
+import vueDevTools from 'vite-plugin-vue-devtools';
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
   const base =
-    command === "build" && !process.env.vercel ? "/xiaomi-photography/" : "/";
+    command === 'build' && !process.env.vercel ? '/xiaomi-photography/' : '/';
   return {
-    plugins: [vue(), UnoCSS()],
+    plugins: [vue(), UnoCSS(), vueDevTools()],
     resolve: {
       alias: {
-        "@": "/src",
+        '@': '/src',
       },
     },
     server: {
@@ -35,14 +36,17 @@ export default defineConfig(({ command }) => {
               .filter(
                 (f) =>
                   ![
-                    "@unocss",
+                    '@unocss',
                     //  '@iconify-json', 'antd'
-                  ].find((item) => f.startsWith(item))
+                  ].find((item) => f.startsWith(item)),
               )
-              .reduce((chunks, name) => {
-                chunks[name] = [name];
-                return chunks;
-              }, {} as Record<string, [string]>),
+              .reduce(
+                (chunks, name) => {
+                  chunks[name] = [name];
+                  return chunks;
+                },
+                {} as Record<string, [string]>,
+              ),
           },
         },
       },
