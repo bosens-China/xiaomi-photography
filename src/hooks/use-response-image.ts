@@ -1,22 +1,18 @@
-import { useDevicePixelRatio, useWindowSize } from "@vueuse/core";
-import { computed } from "vue";
-import useScreen from "./use-screen";
+import { useDevicePixelRatio, useWindowSize } from '@vueuse/core';
+import { computed } from 'vue';
+import { useColumns } from './use-columns';
 
 export const useResponseImage = () => {
   const { pixelRatio } = useDevicePixelRatio();
-  const { activeBreakpoint } = useScreen();
 
   const { width } = useWindowSize();
 
-  const w = computed(() => {
-    switch (activeBreakpoint.value) {
-      case "laptop":
-      case "desktop":
-        return Math.ceil(width.value / 100) * 100;
+  const columns = useColumns();
 
-      default:
-        return Math.ceil((width.value * pixelRatio.value) / 100) * 100;
-    }
+  const w = computed(() => {
+    const value = (width.value / columns.value) * pixelRatio.value;
+
+    return Math.ceil(value / 100) * 100;
   });
 
   const img = computed(() => {

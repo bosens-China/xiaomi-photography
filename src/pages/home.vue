@@ -1,31 +1,14 @@
 <script setup lang="ts">
-import photo from "@/assets/photo.json";
-import Card from "@/components/card.vue";
-import type { List } from "../../server/crawling";
-import { useWindowSize } from "@vueuse/core";
-import { computed } from "vue";
-import Head from "@/components/head.vue";
-import useScreen from "@/hooks/use-screen";
-import { useResponseImage } from "@/hooks/use-response-image";
-
-const { width } = useWindowSize();
-const { activeBreakpoint } = useScreen();
+import photo from '@/assets/photo.json';
+import Card from '@/components/card.vue';
+import type { List } from '../../server/crawling';
+import { computed } from 'vue';
+import Head from '@/components/head.vue';
+import { useResponseImage } from '@/hooks/use-response-image';
+import { useColumns } from '@/hooks/use-columns';
 
 // 列数
-const columns = computed(() => {
-  if (activeBreakpoint.value === "mobile") {
-    return 2;
-  }
-
-  if (activeBreakpoint.value === "tablet") {
-    return 2;
-  }
-
-  if (activeBreakpoint.value === "laptop") {
-    return 3;
-  }
-  return Math.floor(width.value / 512);
-});
+const columns = useColumns();
 
 // 没列数据
 const columnsData = computed(() => {
@@ -33,8 +16,8 @@ const columnsData = computed(() => {
   for (let i = 0; i < columns.value; i++) {
     arr.push(
       Array.from({ length: Math.floor(photo.length / columns.value) }).map(
-        (_, index) => photo[index * columns.value + i] as List
-      )
+        (_, index) => photo[index * columns.value + i] as List,
+      ),
     );
   }
   return arr;
@@ -46,7 +29,7 @@ const date = __APP_DATE;
 const suffix = useResponseImage();
 
 defineOptions({
-  name: "Home",
+  name: 'Home',
 });
 </script>
 

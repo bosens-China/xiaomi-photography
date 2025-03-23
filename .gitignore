@@ -27,3 +27,5 @@ src/assets/photo.json
 server/photo
 src/assets/transplant-information.json
 public/*.pdf
+
+components.d.ts

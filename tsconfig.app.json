@@ -15,5 +15,11 @@
     },
     "lib": ["ES2024", "DOM", "DOM.Iterable"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "./server/**/*.ts"]
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "./server/**/*.ts",
+    "./components.d.ts"
+  ]
 }

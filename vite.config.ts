@@ -7,13 +7,26 @@ import {
 } from './src/assets/transplant-information.json';
 import { dependencies } from './package.json';
 import vueDevTools from 'vite-plugin-vue-devtools';
+import Components from 'unplugin-vue-components/vite';
+import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers';
 
 // https://vite.dev/config/
 export default defineConfig(({ command }) => {
   const base =
     command === 'build' && !process.env.vercel ? '/xiaomi-photography/' : '/';
   return {
-    plugins: [vue(), UnoCSS(), vueDevTools()],
+    plugins: [
+      vue(),
+      UnoCSS(),
+      vueDevTools(),
+      Components({
+        resolvers: [
+          AntDesignVueResolver({
+            importStyle: false, // css in js
+          }),
+        ],
+      }),
+    ],
     resolve: {
       alias: {
         '@': '/src',
