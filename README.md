@@ -7,6 +7,15 @@
 <img src="./image.png" style="max-width: 500px" />
 <img src="./image-1.png" style="max-width: 500px" />
 
+## 待完成
+
+- 详情
+
+  - 描述部分的宽度约束
+  - 添加上一页下一页
+
+- 重复阅读筛选
+
 ## 协议
 
 MIT License
