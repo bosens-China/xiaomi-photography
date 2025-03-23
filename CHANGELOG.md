@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.2.0...v1.2.1) (2025-03-23)
+
+
+### Performance Improvements
+
+* 优化pc图片加载大小，对详情预览pc下的大小进行修订 ([aad1c54](https://github.com/bosens-China/xiaomi-photography/commit/aad1c54cb07098d31b32df3683fe100f68c1a1e0))
+
 ## [1.2.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.1.2...v1.2.0) (2025-03-22)
 
 
