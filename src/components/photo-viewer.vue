@@ -37,11 +37,7 @@ const gridMode = useLocalStorage<GridMode>('composition-grid-mode', 'none', {
 const monochrome = useLocalStorage('photo-monochrome', false, {
   initOnMounted: true,
 });
-const size = useLocalStorage<'auto' | 'original'>('preview-size', 'auto', {
-  initOnMounted: true,
-});
-
-const originalSize = computed(() => size.value === 'original');
+const photoStage = useTemplateRef<InstanceType<typeof PhotoStage>>('photo-stage');
 const specs = computed(() =>
   formatPhotoSpecs(props.item.width, props.item.height),
 );
@@ -59,7 +55,7 @@ function move(direction: -1 | 1) {
 }
 
 function toggleZoom() {
-  size.value = originalSize.value ? 'auto' : 'original';
+  photoStage.value?.toggle();
 }
 
 function cycleGrid() {
@@ -136,11 +132,10 @@ async function share() {
     >
       <PhotoStage
         :photo="item"
-        :original="originalSize"
+        ref="photo-stage"
         :grid-mode="gridMode"
         :monochrome="monochrome"
         @move="move"
-        @toggle-zoom="toggleZoom"
       />
       <nav
         class="flex items-center justify-between gap-2 px-3 py-2.5 border-t border-border bg-card"
@@ -168,7 +163,7 @@ async function share() {
           </span>
           <span class="hidden sm:inline text-border">·</span>
           <span class="hidden sm:inline text-[11px]">
-            {{ originalSize ? '拖拽平移 · 双击适应屏幕' : '双击画面查看 1:1 原图' }}
+            捏合 / Ctrl + 滚轮缩放 · 双击复位
           </span>
         </div>
         <a
@@ -254,13 +249,13 @@ async function share() {
             构图与光影观察
           </span>
           <button
-            v-if="gridMode !== 'none' || monochrome || originalSize"
+            v-if="gridMode !== 'none' || monochrome"
             type="button"
             class="text-[11px] text-muted-foreground hover:text-foreground underline underline-offset-4 bg-transparent border-0 p-0"
             @click="
               gridMode = 'none';
               monochrome = false;
-              size = 'auto';
+              photoStage?.reset();
             "
           >
             重置视图
@@ -324,33 +319,6 @@ async function share() {
               @click="monochrome = true"
             >
               黑白明暗
-            </button>
-          </div>
-        </div>
-
-        <!-- 画面尺寸 -->
-        <div class="flex flex-col gap-2">
-          <span class="text-xs text-muted-foreground">画面缩放</span>
-          <div
-            class="grid grid-cols-2 gap-2.5"
-            role="group"
-            aria-label="图片尺寸"
-          >
-            <button
-              class="control !min-h-8 !px-3 !py-1 !text-xs"
-              type="button"
-              :aria-pressed="!originalSize"
-              @click="size = 'auto'"
-            >
-              适应屏幕
-            </button>
-            <button
-              class="control !min-h-8 !px-3 !py-1 !text-xs"
-              type="button"
-              :aria-pressed="originalSize"
-              @click="size = 'original'"
-            >
-              1:1 原始
             </button>
           </div>
         </div>

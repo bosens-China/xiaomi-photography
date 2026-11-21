@@ -1,56 +1,44 @@
 <script setup lang="ts">
-import { computed, ref, useTemplateRef, watch } from 'vue';
+import { useTemplateRef } from 'vue';
 import PhotoImage from '@/components/photo-image.vue';
 import type { GridMode, Photo } from '@/lib/photos';
-
+import { usePhotoTransform } from '@/lib/use-photo-transform';
 const props = defineProps<{
   photo: Photo;
-  original: boolean;
   gridMode: GridMode;
   monochrome: boolean;
 }>();
-const emit = defineEmits<{
-  move: [direction: -1 | 1];
-  toggleZoom: [];
-}>();
+const emit = defineEmits<{ move: [direction: -1 | 1] }>();
 const stage = useTemplateRef<HTMLDivElement>('stage');
-let touchStart: Touch | undefined;
-
-const dragging = ref(false);
-let dragMoved = false;
-let dragOrigin:
-  | { x: number; y: number; left: number; top: number }
-  | undefined;
-
-const frameStyle = computed(() => {
-  const { width, height } = props.photo;
-  return width && height && width > 0 && height > 0
-    ? { '--aspect': width / height, '--original-width': `${width}px` }
-    : undefined;
-});
-
-watch(
-  () => [props.photo.id, props.original],
-  () => {
-    stage.value?.scrollTo(0, 0);
-  },
-  { flush: 'post' },
+const {
+  frameStyle,
+  magnified,
+  dragging,
+  toggle,
+  reset,
+  startDrag,
+  moveDrag,
+  endDrag,
+  keydown,
+} = usePhotoTransform(
+  stage,
+  () => ({ width: props.photo.width || 4, height: props.photo.height || 3 }),
+  () => props.photo.id,
 );
-
+defineExpose({ toggle, reset });
+let touchStart: Touch | undefined;
 function startSwipe(event: TouchEvent) {
   touchStart =
-    !props.original && event.touches.length === 1
+    !magnified.value && event.touches.length === 1
       ? event.touches[0]
       : undefined;
 }
-
 function endSwipe(event: TouchEvent) {
   const start = touchStart;
   touchStart = undefined;
-  if (!start || event.touches.length) return;
-
+  if (!start || event.touches.length || magnified.value) return;
   const end = Array.from(event.changedTouches).find(
-    ({ identifier }) => identifier === start.identifier,
+    (touch) => touch.identifier === start.identifier,
   );
   if (!end) return;
   const dx = end.clientX - start.clientX;
@@ -58,80 +46,35 @@ function endSwipe(event: TouchEvent) {
   if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.5)
     emit('move', dx > 0 ? -1 : 1);
 }
-
-function startDrag(event: MouseEvent) {
-  if (!props.original || event.button !== 0 || !stage.value) return;
-  event.preventDefault();
-  dragging.value = true;
-  dragMoved = false;
-  dragOrigin = {
-    x: event.clientX,
-    y: event.clientY,
-    left: stage.value.scrollLeft,
-    top: stage.value.scrollTop,
-  };
-}
-
-function onDrag(event: MouseEvent) {
-  if (!dragging.value || !dragOrigin || !stage.value) return;
-  const dx = event.clientX - dragOrigin.x;
-  const dy = event.clientY - dragOrigin.y;
-  if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragMoved = true;
-  stage.value.scrollLeft = dragOrigin.left - dx;
-  stage.value.scrollTop = dragOrigin.top - dy;
-}
-
-function endDrag() {
-  dragging.value = false;
-  dragOrigin = undefined;
-}
-
-function onDoubleClick() {
-  if (!dragMoved) emit('toggleZoom');
-}
-
-function panWithArrows(event: KeyboardEvent) {
-  if (
-    props.original &&
-    (event.key === 'ArrowLeft' || event.key === 'ArrowRight')
-  )
-    event.stopPropagation();
-}
 </script>
 
 <template>
   <div
     ref="stage"
     class="stage"
-    :class="{
-      'stage-original': original,
-      'is-dragging': dragging,
-    }"
-    :style="frameStyle"
-    :tabindex="original ? 0 : undefined"
-    :role="original ? 'region' : undefined"
-    :aria-label="
-      original
-        ? '原始尺寸照片，可滚动或拖拽查看，双击切回适应屏幕'
-        : '适应屏幕，双击可查看原始尺寸'
-    "
-    @keydown="panWithArrows"
-    @mousedown="startDrag"
-    @mousemove="onDrag"
-    @mouseup="endDrag"
-    @mouseleave="endDrag"
-    @dblclick="onDoubleClick"
+    :class="{ 'is-magnified': magnified, 'is-dragging': dragging }"
+    :style="{ '--aspect': (photo.width || 4) / (photo.height || 3) }"
+    tabindex="0"
+    role="region"
+    aria-label="照片画布：桌面捏合或 Ctrl 加滚轮缩放，双击或 Z 放大与复位；加减号缩放，0 复位，放大后方向键平移"
+    @keydown="keydown"
+    @pointerdown="startDrag"
+    @pointermove="moveDrag"
+    @pointerup="endDrag"
+    @pointercancel="endDrag"
+    @lostpointercapture="endDrag"
+    @dblclick="toggle($event.clientX, $event.clientY)"
+    @dragstart.prevent
     @touchstart.passive="startSwipe"
     @touchend.passive="endSwipe"
     @touchcancel="touchStart = undefined"
   >
-    <div class="photo-frame" :class="{ 'is-monochrome': monochrome }">
-      <PhotoImage
-        :photo="photo"
-        :original="original"
-        sizes="(min-width: 1272px) 850px, (min-width: 900px) 65vw, 100vw"
-        eager
-      />
+    <div
+      class="photo-frame"
+      :style="frameStyle"
+      :class="{ 'is-monochrome': monochrome }"
+    >
+      <PhotoImage :photo="photo" original eager />
 
       <!-- 构图辅助网格 SVG 叠加层（带暗色衬底+亮色细线，深浅画面均清晰可见） -->
       <svg
@@ -196,39 +139,39 @@ function panWithArrows(event: KeyboardEvent) {
 <style scoped>
 .stage {
   --view-height: clamp(360px, calc(100dvh - 220px), 720px);
-  display: grid;
-  place-items: center;
+  position: relative;
+  container-type: size;
   width: 100%;
   height: var(--view-height);
   background: var(--stage);
   overflow: hidden;
   touch-action: pan-y pinch-zoom;
-  cursor: zoom-in;
-}
-
-.stage-original {
-  display: block;
-  overflow: auto;
-  touch-action: auto;
-  cursor: grab;
   user-select: none;
 }
-
-.stage-original.is-dragging {
-  cursor: grabbing;
+@media (hover: hover) and (pointer: fine) {
+  .stage {
+    cursor: zoom-in;
+  }
+  .stage.is-magnified {
+    cursor: grab;
+  }
+  .stage.is-dragging {
+    cursor: grabbing;
+  }
 }
-
-.stage-original:focus-visible {
+.stage:focus-visible {
   outline-offset: -4px;
 }
-
 .photo-frame {
   --photo-fit: contain;
   --muted: #a1a1aa;
-  position: relative;
-  aspect-ratio: var(--aspect, 4 / 3);
-  width: min(100%, calc(var(--view-height) * var(--aspect, 1.3333)));
-  transition: filter 220ms ease;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform-origin: center;
+  aspect-ratio: var(--aspect, 1.3333);
+  width: min(100cqw, calc(100cqh * var(--aspect, 1.3333)));
+  transform: translate(-50%, -50%);
 }
 
 .photo-frame.is-monochrome :deep(img) {
@@ -237,11 +180,6 @@ function panWithArrows(event: KeyboardEvent) {
 
 .photo-frame > :first-child {
   background: var(--stage);
-}
-
-.stage-original .photo-frame {
-  width: var(--original-width, 100%);
-  margin-inline: auto;
 }
 
 .composition-overlay {
