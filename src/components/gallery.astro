@@ -1,0 +1,514 @@
+---
+import {
+  ArrowDownOutlined,
+  ExportOutlined,
+  LeftOutlined,
+  RightOutlined,
+  CalendarOutlined,
+  CheckOutlined,
+  DownOutlined,
+} from '@ant-design/icons-vue';
+import type { Issue } from '@/lib/issues';
+import { issueUrl, photoUrl } from '@/lib/urls';
+import GalleryImage from './gallery-image.astro';
+
+interface Props {
+  issue: Issue;
+  issues: Issue[];
+}
+
+const { issue, issues } = Astro.props;
+const featured =
+  issue.photos.find(({ width, height }) => width >= height) ?? issue.photos[0];
+
+const currentIndex = issues.findIndex((entry) => entry.date === issue.date);
+const issueNumber = issues.length - currentIndex;
+const newerIssue = currentIndex > 0 ? issues[currentIndex - 1] : undefined;
+const olderIssue =
+  currentIndex >= 0 && currentIndex < issues.length - 1
+    ? issues[currentIndex + 1]
+    : undefined;
+---
+<main class="shell home pt-5 sm:pt-8" data-issue={issue.date}>
+  <section
+    class="hero relative isolate grid items-center min-h-[380px] sm:min-h-[430px] overflow-hidden rounded-xl border border-border/40 bg-[#121214] text-[#fafafa] shadow-sm"
+    aria-labelledby="hero-title"
+  >
+    <GalleryImage
+      class="hero-photo"
+      photo={featured}
+      sizes="(min-width: 1600px) 1440px, (min-width: 1284px) 1280px, 100vw"
+      eager
+    />
+    <div class="hero-content relative z-10 px-6 pt-28 pb-16 sm:px-12 sm:py-12 md:px-14">
+      <div class="flex flex-wrap items-center gap-2.5 mb-5 text-xs tracking-wider text-zinc-300">
+        <span class="inline-flex items-center gap-1.5 rounded-md border border-white/15 bg-white/10 px-2.5 py-1 font-medium text-white backdrop-blur-md">
+          <span>VOL.{String(issueNumber).padStart(2, '0')}</span>
+        </span>
+        <span class="text-white/30">·</span>
+        <time class="font-mono text-zinc-300 tabular-nums" datetime={issue.date}>
+          {issue.date.replaceAll('-', '.')}
+        </time>
+        <span class="text-white/30">·</span>
+        <span>{issue.photos.length} 幅作品</span>
+      </div>
+      <h1
+        id="hero-title"
+        class="m-0 text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight leading-[1.15] text-white"
+      >
+        从镜头里，<br />看见日常。
+      </h1>
+      <p class="max-w-md mt-4 mb-6 text-sm sm:text-base text-zinc-300 leading-relaxed">
+        {issue.title}
+      </p>
+      <div class="flex flex-wrap items-center gap-2.5">
+        <a
+          class="inline-flex items-center justify-center gap-2 min-h-9 px-4 py-2 rounded-md bg-white text-zinc-950 text-xs sm:text-sm font-medium shadow-sm transition-opacity hover:opacity-90"
+          href="#gallery-title"
+        >
+          <span>开始浏览</span>
+          <ArrowDownOutlined aria-hidden="true" />
+        </a>
+        {issues.length > 1 && (
+          <a
+            class="inline-flex items-center justify-center gap-2 min-h-9 px-3.5 py-2 rounded-md border border-white/20 bg-black/35 text-white text-xs sm:text-sm font-medium backdrop-blur-md transition-colors hover:bg-white/15"
+            href="#issue-archive"
+          >
+            <CalendarOutlined aria-hidden="true" />
+            <span>共 {issues.length} 期周刊</span>
+          </a>
+        )}
+      </div>
+    </div>
+    <a
+      class="feature-credit"
+      href={photoUrl(issue.date, featured.id)}
+      data-photo={featured.id}
+    >
+      <span>封面：{featured.name} · {featured.userName}</span>
+      <ExportOutlined aria-hidden="true" />
+    </a>
+  </section>
+
+  <section class="gallery mt-8 sm:mt-11" aria-labelledby="gallery-title">
+    <div
+      id="issue-archive"
+      class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 mb-6 border-b border-border scroll-mt-20"
+    >
+      <div>
+        <div class="flex items-center gap-2.5">
+          <h2
+            id="gallery-title"
+            tabindex="-1"
+            class="m-0 text-lg sm:text-xl font-semibold tracking-tight text-foreground"
+          >
+            作品浏览
+          </h2>
+          <span class="inline-flex items-center rounded-md border border-border bg-secondary px-2 py-0.5 text-xs font-mono font-medium text-muted-foreground tabular-nums">
+            VOL.{String(issueNumber).padStart(2, '0')} · {issue.date}
+          </span>
+        </div>
+        <p class="mt-1 mb-0 text-xs sm:text-sm text-muted-foreground">
+          {issue.title} · 共 {issue.photos.length} 件作品
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-2.5">
+        {issues.length > 1 && (
+          <div class="inline-flex items-center gap-2" role="group" aria-label="相邻期次切换">
+            {olderIssue ? (
+              <a
+                class="control"
+                href={issueUrl(olderIssue.date)}
+                title={`上一期：${olderIssue.date} ${olderIssue.title}`}
+              >
+                <LeftOutlined aria-hidden="true" class="text-[10px]" />
+                <span>上一期</span>
+              </a>
+            ) : (
+              <span
+                class="control"
+                aria-disabled="true"
+              >
+                <LeftOutlined aria-hidden="true" class="text-[10px]" />
+                <span>上一期</span>
+              </span>
+            )}
+            {newerIssue ? (
+              <a
+                class="control"
+                href={issueUrl(newerIssue.date)}
+                title={`下一期：${newerIssue.date} ${newerIssue.title}`}
+              >
+                <span>下一期</span>
+                <RightOutlined aria-hidden="true" class="text-[10px]" />
+              </a>
+            ) : (
+              <span
+                class="control"
+                aria-disabled="true"
+              >
+                <span>下一期</span>
+                <RightOutlined aria-hidden="true" class="text-[10px]" />
+              </span>
+            )}
+          </div>
+        )}
+
+        <details class="issue-picker relative z-20">
+          <summary class="control list-none select-none cursor-pointer">
+            <CalendarOutlined aria-hidden="true" class="text-muted-foreground" />
+            <span>选择期次</span>
+            <span class="font-mono text-xs text-muted-foreground tabular-nums">
+              ({currentIndex + 1}/{issues.length})
+            </span>
+            <DownOutlined aria-hidden="true" class="picker-chevron text-[10px] text-muted-foreground transition-transform duration-150" />
+          </summary>
+          <div class="issue-popover">
+            <div class="px-3 py-2 border-b border-border flex items-center justify-between text-xs text-muted-foreground">
+              <span class="font-medium text-foreground">全部周刊归档</span>
+              <span class="font-mono tabular-nums">共 {issues.length} 期</span>
+            </div>
+            <ul class="m-0 p-1.5 list-none max-h-72 overflow-y-auto flex flex-col gap-1">
+              {issues.map((entry, idx) => {
+                const vol = issues.length - idx;
+                const isCurrent = entry.date === issue.date;
+                const cover =
+                  entry.photos.find(({ width, height }) => width >= height) ??
+                  entry.photos[0];
+                return (
+                  <li>
+                    <a
+                      href={issueUrl(entry.date)}
+                      aria-current={isCurrent ? 'page' : undefined}
+                      class:list={[
+                        'group flex items-center gap-3 p-2 rounded-md text-left transition-colors',
+                        isCurrent
+                          ? 'bg-secondary text-foreground font-medium'
+                          : 'hover:bg-accent text-foreground',
+                      ]}
+                    >
+                      <div class="w-12 h-9 shrink-0 rounded overflow-hidden border border-border bg-secondary">
+                        <GalleryImage
+                          photo={cover}
+                          sizes="96px"
+                        />
+                      </div>
+                      <div class="min-w-0 flex-1">
+                        <div class="flex items-center gap-1.5 text-xs">
+                          <span class="font-mono font-semibold tabular-nums">
+                            VOL.{String(vol).padStart(2, '0')}
+                          </span>
+                          <span class="text-muted-foreground">·</span>
+                          <time class="font-mono text-muted-foreground tabular-nums">
+                            {entry.date}
+                          </time>
+                          {idx === 0 && (
+                            <span class="ml-auto rounded bg-primary px-1.5 py-0.2 text-[10px] font-medium text-primary-foreground">
+                              最新
+                            </span>
+                          )}
+                        </div>
+                        <p class="m-0 mt-0.5 text-xs text-muted-foreground truncate group-hover:text-foreground transition-colors">
+                          {entry.title}
+                        </p>
+                      </div>
+                      <div class="w-4 shrink-0 flex items-center justify-center text-foreground">
+                        {isCurrent && <CheckOutlined aria-hidden="true" class="text-xs" />}
+                      </div>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+
+    <ul class="gallery-grid" role="list">
+      {issue.photos.map((photo) => (
+        <li>
+          <a
+            class="photo-card group"
+            href={photoUrl(issue.date, photo.id)}
+            data-photo={photo.id}
+          >
+            <div
+              class="card-media"
+              style={{ aspectRatio: photo.width / photo.height }}
+            >
+              <GalleryImage
+                photo={photo}
+                sizes="(min-width: 1600px) 344px, (min-width: 1284px) 386px, (min-width: 1024px) 32vw, (min-width: 640px) 48vw, 96vw"
+              />
+            </div>
+            <div class="card-caption flex items-baseline justify-between gap-3 px-3.5 py-3 border-t border-border/60">
+              <h3 class="m-0 text-sm font-medium leading-snug text-foreground line-clamp-1 group-hover:text-foreground">
+                {photo.name}
+              </h3>
+              <p class="m-0 text-xs text-muted-foreground truncate shrink-0 max-w-[45%]">
+                {photo.userName}
+              </p>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    {issues.length > 1 && (
+      <nav
+        class="mt-12 pt-6 border-t border-border flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3"
+        aria-label="底部周刊切换"
+      >
+        {olderIssue ? (
+          <a
+            href={issueUrl(olderIssue.date)}
+            class="card-surface flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent sm:max-w-[48%]"
+          >
+            <LeftOutlined aria-hidden="true" class="text-xs text-muted-foreground shrink-0" />
+            <div class="min-w-0">
+              <div class="text-[11px] font-mono text-muted-foreground">
+                上一期 · {olderIssue.date}
+              </div>
+              <div class="text-xs sm:text-sm font-medium text-foreground truncate">
+                {olderIssue.title}
+              </div>
+            </div>
+          </a>
+        ) : (
+          <div class="hidden sm:block" />
+        )}
+
+        {newerIssue && (
+          <a
+            href={issueUrl(newerIssue.date)}
+            class="card-surface flex items-center justify-end gap-3 px-4 py-3 text-right transition-colors hover:bg-accent sm:max-w-[48%] sm:ml-auto"
+          >
+            <div class="min-w-0">
+              <div class="text-[11px] font-mono text-muted-foreground">
+                下一期 · {newerIssue.date}
+              </div>
+              <div class="text-xs sm:text-sm font-medium text-foreground truncate">
+                {newerIssue.title}
+              </div>
+            </div>
+            <RightOutlined aria-hidden="true" class="text-xs text-muted-foreground shrink-0" />
+          </a>
+        )}
+      </nav>
+    )}
+  </section>
+</main>
+
+<script>
+  import '@/lib/gallery-browser';
+</script>
+
+<style is:global>
+.hero .hero-photo,
+.hero::after {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+}
+
+.hero .hero-photo {
+  --photo-position: 50% 47%;
+}
+
+.hero::after {
+  z-index: -1;
+  content: '';
+  background:
+    linear-gradient(
+      90deg,
+      rgb(9 9 11 / 92%),
+      rgb(9 9 11 / 72%) 32%,
+      rgb(9 9 11 / 18%) 78%
+    ),
+    linear-gradient(0deg, rgb(9 9 11 / 68%), transparent 35%);
+}
+
+.hero :focus-visible {
+  outline-color: #ffffff;
+}
+
+.feature-credit {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 34px;
+  max-width: calc(100% - 32px);
+  padding: 6px 12px;
+  border: 1px solid rgb(255 255 255 / 18%);
+  border-radius: calc(var(--radius) - 2px);
+  background: rgb(9 9 11 / 62%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #f4f4f5;
+  font-size: 0.75rem;
+  text-decoration: none;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.feature-credit > span:first-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feature-credit:hover {
+  background: rgb(9 9 11 / 88%);
+  border-color: rgb(255 255 255 / 35%);
+}
+
+.gallery h2 {
+  scroll-margin-top: calc(
+    var(--header-height) + env(safe-area-inset-top) + 18px
+  );
+}
+
+.issue-picker summary::-webkit-details-marker {
+  display: none;
+}
+
+.issue-picker[open] .picker-chevron {
+  transform: rotate(180deg);
+}
+
+.issue-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 6px);
+  width: min(340px, calc(100vw - 32px));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--popover);
+  color: var(--popover-foreground);
+  box-shadow:
+    0 10px 25px -5px rgb(0 0 0 / 0.12),
+    0 8px 10px -6px rgb(0 0 0 / 0.08);
+  overflow: hidden;
+}
+
+@media (max-width: 639px) {
+  .issue-popover {
+    left: 0;
+    right: auto;
+  }
+
+  .hero {
+    align-items: end;
+    min-height: 410px;
+  }
+
+  .hero .hero-photo {
+    --photo-position: 56% 42%;
+    height: 72%;
+  }
+
+  .hero::after {
+    background: linear-gradient(
+      0deg,
+      #09090b 14%,
+      rgb(9 9 11 / 92%) 36%,
+      rgb(9 9 11 / 72%) 55%,
+      transparent 82%
+    );
+  }
+
+  .feature-credit {
+    right: 12px;
+    bottom: 10px;
+  }
+}
+
+.gallery-grid {
+  --columns: 1;
+  --gap: 14px;
+  display: grid;
+  align-items: start;
+  grid-template-columns: repeat(var(--columns), minmax(0, 1fr));
+  gap: var(--gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .gallery-grid {
+    --columns: 2;
+    --gap: 16px;
+  }
+
+  .gallery-grid[data-masonry] {
+    display: block;
+    position: relative;
+    height: var(--gallery-height);
+  }
+
+  .gallery-grid[data-masonry] > li {
+    position: absolute;
+    top: var(--top, 0);
+    inset-inline-start: calc(
+      var(--column, 0) * (100% + var(--gap)) / var(--columns)
+    );
+    width: calc((100% - (var(--columns) - 1) * var(--gap)) / var(--columns));
+  }
+}
+
+@media (min-width: 1024px) {
+  .gallery-grid {
+    --columns: 3;
+    --gap: 20px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .gallery-grid {
+    --columns: 4;
+  }
+}
+
+.photo-card {
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+  overflow: hidden;
+  text-decoration: none;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.03);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+}
+
+.card-media {
+  --photo-fit: contain;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: var(--secondary);
+}
+
+.card-media img {
+  transition: transform 350ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .photo-card:hover {
+    border-color: color-mix(in srgb, var(--foreground) 30%, var(--border));
+    box-shadow: 0 8px 20px -6px rgb(0 0 0 / 0.08);
+    transform: translateY(-2px);
+  }
+
+  .photo-card:hover .card-media img {
+    transform: scale(1.015);
+  }
+}
+</style>

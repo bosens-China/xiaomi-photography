@@ -1,0 +1,87 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { LeftOutlined, CalendarOutlined } from '@ant-design/icons-vue';
+import PhotoViewer from '@/components/photo-viewer.vue';
+import Site from '@/layouts/site.astro';
+import { getIssues } from '@/lib/issues';
+import { homeUrl, issueUrl, photoUrl } from '@/lib/urls';
+
+export const getStaticPaths = (async () => {
+  const issues = await getIssues();
+  return issues.flatMap(({ date, title, photos, sourceUrl }, issueIdx) => {
+    const isLatest = issueIdx === 0;
+    const vol = issues.length - issueIdx;
+    return photos.map((item, index) => {
+      const previous = photos[index - 1];
+      const next = photos[index + 1];
+      return {
+        params: { issue: date, photo: item.id },
+        props: {
+          date,
+          issueTitle: title,
+          vol,
+          isLatest,
+          item,
+          index,
+          sourceUrl,
+          count: photos.length,
+          previous: previous && photoUrl(date, previous.id),
+          next: next && photoUrl(date, next.id),
+        },
+      };
+    });
+  });
+}) satisfies GetStaticPaths;
+
+const {
+  item,
+  date,
+  issueTitle,
+  vol,
+  isLatest,
+  sourceUrl,
+  index,
+  count,
+  previous,
+  next,
+} = Astro.props;
+const back = `${isLatest ? homeUrl : issueUrl(date)}?from=photo`;
+---
+<Site
+  title={`${item.name} · 光影集`}
+  description={item.desc || `${item.name} · ${item.userName}`}
+  sourceUrl={sourceUrl}
+>
+  <main class="shell py-4 sm:py-7">
+    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+      <a
+        class="control"
+        href={back}
+        aria-keyshortcuts="Escape"
+      >
+        <LeftOutlined aria-hidden="true" class="text-xs" />
+        <span>返回画廊</span>
+      </a>
+      <div class="inline-flex items-center gap-2 text-xs text-muted-foreground">
+        <span class="inline-flex items-center gap-1.5 rounded-md border border-border bg-secondary px-2.5 py-1 font-mono font-medium text-foreground tabular-nums">
+          <CalendarOutlined aria-hidden="true" class="text-[11px] text-muted-foreground" />
+          <span>VOL.{String(vol).padStart(2, '0')}</span>
+          <span class="text-muted-foreground">·</span>
+          <time datetime={date}>{date.replaceAll('-', '.')}</time>
+        </span>
+        <span class="hidden md:inline text-muted-foreground truncate max-w-xs">
+          {issueTitle}
+        </span>
+      </div>
+    </div>
+    <PhotoViewer
+      client:load
+      item={item}
+      index={index}
+      count={count}
+      previous={previous}
+      next={next}
+      back={back}
+    />
+  </main>
+</Site>

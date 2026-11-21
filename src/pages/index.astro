@@ -1,0 +1,27 @@
+---
+import Site from '@/layouts/site.astro';
+import Gallery from '@/components/gallery.astro';
+import { getIssues } from '@/lib/issues';
+import { homeUrl } from '@/lib/urls';
+
+const issues = await getIssues();
+const issue = issues[0];
+const legacy = issues.map(({ date, photos }) => ({ date, ids: photos.map(({ id }) => id) }));
+---
+<Site sourceUrl={issue.sourceUrl}>
+  <script define:vars={{ legacy, homeUrl }}>
+    if (location.hash.startsWith('#/')) {
+      const [path, query] = location.hash.slice(1).split('?');
+      const date = new URLSearchParams(query).get('issue');
+      const id = path.match(/^\/preview\/([\w-]+)$/)?.[1];
+      if (id) {
+        const match = legacy.find((entry) => (!date || entry.date === date) && entry.ids.includes(id));
+        location.replace(match ? `${homeUrl}issues/${match.date}/photos/${id}/` : `${homeUrl}404.html`);
+      } else if (date && legacy.some((entry) => entry.date === date)) {
+        location.replace(`${homeUrl}issues/${date}/`);
+      }
+      else history.replaceState(history.state, '', location.pathname);
+    }
+  </script>
+  <Gallery issue={issue} issues={issues} />
+</Site>

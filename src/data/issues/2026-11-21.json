@@ -1,0 +1,179 @@
+{
+  "date": "2026-11-21",
+  "title": "2026 小米徕卡全球影像大赛 · 中国获奖作品",
+  "sourceUrl": "https://eu-imagery.event.mi.com/eu/xiaomiImageryawards/award-works",
+  "photos": [
+    {
+      "id": "the-boy-in-black",
+      "name": "The Boy in Black",
+      "userName": "Xiang Feitian",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/b253cb5e_e0a4_4f55_bcea_e12e96dca0f1.jpeg?w=1920&h=1440",
+      "width": 1920,
+      "height": 1440
+    },
+    {
+      "id": "the-beauty-of-danger",
+      "name": "The Beauty of Danger",
+      "userName": "HuanXiangDeAiGe",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3b36b257_a47a_4a75_b43a_a22e5700f917.jpeg?w=4096&h=3072",
+      "width": 4096,
+      "height": 3072,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/2fb90539_d582_4533_9798_851cb239af21.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "a-noisy-corner",
+      "name": "A Noisy Corner",
+      "userName": "Chen Xiaomei",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d58ebc3e_00d9_4a71_9da5_3a41104fbf26.jpeg?w=4096&h=3072",
+      "width": 4096,
+      "height": 3072,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/ddfc42e7_b7b3_4d03_87f2_353715193245.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "exclusive",
+      "name": "Exclusive",
+      "userName": "Jiang Jihang",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/6908f52b_f05c_4af2_9e36_10207428b1f0.jpeg?w=2373&h=3164",
+      "width": 2373,
+      "height": 3164,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/30f21c54_97d8_44a9_a9c7_d1dacdcfae67.jpeg?w=900&h=1200",
+          "width": 900
+        }
+      ]
+    },
+    {
+      "id": "a-cat-leaping-against-the-wall",
+      "name": "A Cat Leaping Against the Wall",
+      "userName": "puyonghui",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4ecbbe20_f158_481a_b98d_678c75a219c2.jpeg?w=3950&h=2963",
+      "width": 3950,
+      "height": 2963,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/41fe0289_9f18_4ce3_9c7a_6688a6b88994.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "shadow-of-a-butterfly",
+      "name": "Shadow of a Butterfly",
+      "userName": "Bu Dan",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/266fa3d0_eeab_480b_b77f_0b68761f4811.jpeg?w=3072&h=4080",
+      "width": 3072,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/9544899e_6b82_4c12_ae29_6bdaabed7382.jpeg?w=903&h=1200",
+          "width": 903
+        }
+      ]
+    },
+    {
+      "id": "war-and-peace",
+      "name": "War and Peace",
+      "userName": "Gui Xiaodong",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/c53147ff_cade_4e17_b0b9_9408e6174d08.jpeg?w=1789&h=1790",
+      "width": 1789,
+      "height": 1790
+    },
+    {
+      "id": "the-silent-one",
+      "name": "The Silent One",
+      "userName": "lizizi",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/a37347ef_baf5_4107_8ed6_59b1b3fc3558.jpeg?w=2782&h=2823",
+      "width": 2782,
+      "height": 2823,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/d979af8f_041c_4041_896f_2dcf7f0a0d86.jpeg?w=1892&h=1920",
+          "width": 1892
+        }
+      ]
+    },
+    {
+      "id": "family-ties",
+      "name": "Family Ties",
+      "userName": "Ei Laiya",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/dcd1a750_afb0_4efb_a884_f972a2bd88f0.jpeg?w=3060&h=4080",
+      "width": 3060,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/02b66dea_7ee0_4960_bd41_837b4673fc8d.jpeg?w=1440&h=1920",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "id": "ordinary-seasons-under-the-apricot-tree",
+      "name": "Ordinary Seasons Under the Apricot Tree",
+      "userName": "SHOUCHU2026",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d949b10b_7cd8_4ac9_a7fb_b14b523881c4.jpeg?w=4080&h=2720",
+      "width": 4080,
+      "height": 2720,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/614f4b80_a8bb_4389_977f_5c5fca1fd3b7.jpeg?w=1920&h=1280",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "brave-treaders-of-fire",
+      "name": "Brave Treaders of Fire",
+      "userName": "Sanzer",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/fb549251_6082_4e89_9760_ff9dbb5b7dbf.jpeg?w=4096&h=3057",
+      "width": 4096,
+      "height": 3057,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/d3987362_2a5e_4130_bb1c_3f3bbac92f83.jpeg?w=1920&h=1433",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "intertidal-zone",
+      "name": "Intertidal Zone",
+      "userName": "Zeno of Citium",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/f16a80f1_f2c6_4868_8ae6_cd0fab76d075.jpeg?w=1440&h=1920",
+      "width": 1440,
+      "height": 1920
+    },
+    {
+      "id": "tsagaan-idee",
+      "name": "Tsagaan Idee",
+      "userName": "Seven Liang",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/56d0d75a_e305_4627_b05d_f831ad4e97c9.jpeg?w=1920&h=1536",
+      "width": 1920,
+      "height": 1536
+    },
+    {
+      "id": "green-chestnuts-and-the-evening-bell",
+      "name": "Green Chestnuts and the Evening Bell",
+      "userName": "Zhu Zheng",
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4b9db82f_9a92_4088_ac08_1a4c43bbc1fb.jpeg?w=1445&h=1920",
+      "width": 1445,
+      "height": 1920,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/8adf6aab_3f16_4549_9a69_1fd058212407.jpeg?w=1444&h=1919",
+          "width": 1444
+        }
+      ]
+    }
+  ]
+}

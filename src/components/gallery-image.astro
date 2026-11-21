@@ -1,0 +1,53 @@
+---
+import { imageSources, type Photo } from '@/lib/photos';
+
+interface Props {
+  photo: Photo;
+  sizes: string;
+  class?: string;
+  eager?: boolean;
+}
+
+const { photo, sizes, class: className, eager } = Astro.props;
+const { src, srcset } = imageSources(photo);
+---
+<div class:list={['gallery-image', className]}>
+  <img
+    src={src}
+    srcset={srcset}
+    sizes={srcset ? sizes : undefined}
+    width={photo.width}
+    height={photo.height}
+    data-original={photo.picUrl}
+    alt=""
+    loading={eager ? 'eager' : 'lazy'}
+    fetchpriority={eager ? 'high' : undefined}
+    decoding="async"
+  />
+  <span hidden>图片暂不可用</span>
+</div>
+
+<style>
+  .gallery-image {
+    width: 100%;
+    height: 100%;
+    background: var(--surface-alt);
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: var(--photo-fit, cover);
+    object-position: var(--photo-position, center);
+  }
+
+  img[hidden] { display: none; }
+
+  span:not([hidden]) {
+    display: grid;
+    height: 100%;
+    place-items: center;
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+</style>

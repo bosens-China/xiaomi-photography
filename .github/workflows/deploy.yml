@@ -8,14 +8,6 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  schedule:
-    # 北京时间 5:00 = UTC 21:00 (前一日)
-    - cron: '0 21 * * *'
-    # 北京时间 9:00 = UTC 1:00
-    - cron: '0 1 * * *'
-    # 北京时间 14:00 = UTC 6:00
-    - cron: '0 6 * * *'
-
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
@@ -38,8 +30,6 @@ jobs:
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v3
-        with:
-          version: 10
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -48,10 +38,7 @@ jobs:
           cache: pnpm
 
       - name: Install dependencies
-        run: pnpm install
-
-      - name: Build project
-        run: pnpm run crawling
+        run: pnpm install --frozen-lockfile
 
       - name: Build project
         run: pnpm run build

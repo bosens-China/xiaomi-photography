@@ -32,13 +32,6 @@ export default defineConfig([
     },
   },
   {
-    languageOptions: {
-      // 声明全局变量
-      globals: {
-        __APP_PDFURL: "readonly",
-        __APP_DATE: "readonly",
-      },
-    },
     rules: {
       "vue/multi-word-component-names": "off",
     },

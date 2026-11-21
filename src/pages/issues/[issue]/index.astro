@@ -1,0 +1,16 @@
+---
+import type { GetStaticPaths } from 'astro';
+import Gallery from '@/components/gallery.astro';
+import Site from '@/layouts/site.astro';
+import { getIssues } from '@/lib/issues';
+
+export const getStaticPaths = (async () => {
+  const issues = await getIssues();
+  return issues.map((issue) => ({ params: { issue: issue.date }, props: { issue, issues } }));
+}) satisfies GetStaticPaths;
+
+const { issue, issues } = Astro.props;
+---
+<Site title={`${issue.title} · 光影集`} description={issue.title} sourceUrl={issue.sourceUrl}>
+  <Gallery issue={issue} issues={issues} />
+</Site>
