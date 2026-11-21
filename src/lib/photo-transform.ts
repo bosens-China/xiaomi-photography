@@ -39,14 +39,15 @@ export function zoomAt(
   anchor: { x: number; y: number },
   frame: Size,
   stage: Size,
+  pan = { x: 0, y: 0 },
 ): Transform {
   const next = Math.min(8, Math.max(1, scale));
   const ratio = next / value.scale;
   return boundTransform(
     {
       scale: next,
-      x: anchor.x - (anchor.x - value.x) * ratio,
-      y: anchor.y - (anchor.y - value.y) * ratio,
+      x: anchor.x - (anchor.x - value.x) * ratio + pan.x,
+      y: anchor.y - (anchor.y - value.y) * ratio + pan.y,
     },
     frame,
     stage,

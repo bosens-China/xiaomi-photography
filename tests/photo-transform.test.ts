@@ -64,3 +64,13 @@ test('continuous zoom is capped', () => {
   const stage = { width: 800, height: 600 };
   assert.equal(zoomAt(FIT, 999, { x: 0, y: 0 }, stage, stage).scale, 8);
 });
+
+test('pinch preserves image point under the moving midpoint before bounds', () => {
+  const stage = { width: 800, height: 600 };
+  const next = zoomAt(FIT, 2, { x: 100, y: 50 }, stage, stage, {
+    x: 20,
+    y: 30,
+  });
+  assert.equal((120 - next.x) / next.scale, 100);
+  assert.equal((80 - next.y) / next.scale, 50);
+});

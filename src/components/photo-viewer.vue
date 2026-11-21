@@ -154,17 +154,18 @@ async function share() {
           <LeftOutlined aria-hidden="true" class="text-xs" />
           <span>上一张</span>
         </span>
-        <div class="flex items-center gap-2 text-xs text-muted-foreground">
+        <div class="flex flex-wrap items-center justify-center gap-x-2 text-xs text-muted-foreground">
           <span
             class="font-mono tabular-nums text-foreground font-medium"
             aria-live="polite"
           >
             {{ index + 1 }} / {{ count }}
           </span>
-          <span class="hidden sm:inline text-border">·</span>
-          <span class="hidden sm:inline text-[11px]">
-            捏合 / Ctrl + 滚轮缩放 · 双击复位
+          <span class="desktop-zoom-hint hidden sm:inline text-border">·</span>
+          <span class="desktop-zoom-hint hidden sm:inline text-[11px]">
+            捏合 / Ctrl + 滚轮缩放 · 双击放大或复位
           </span>
+          <span class="touch-zoom-hint text-[11px]">双指缩放</span>
         </div>
         <a
           v-if="next"
@@ -398,6 +399,20 @@ async function share() {
   grid-template-columns: minmax(0, 1fr) minmax(300px, 350px);
   align-items: start;
   gap: 18px;
+}
+
+.touch-zoom-hint {
+  display: none;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .desktop-zoom-hint {
+    display: none;
+  }
+
+  .touch-zoom-hint {
+    display: inline;
+  }
 }
 
 .kbd-badge {

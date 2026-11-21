@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { useTemplateRef } from 'vue';
+import { useTemplateRef, watch } from 'vue';
 import PhotoImage from '@/components/photo-image.vue';
 import type { GridMode, Photo } from '@/lib/photos';
+import { createPhotoTouch } from '@/lib/photo-touch';
 import { usePhotoTransform } from '@/lib/use-photo-transform';
 const props = defineProps<{
   photo: Photo;
@@ -10,12 +11,15 @@ const props = defineProps<{
 }>();
 const emit = defineEmits<{ move: [direction: -1 | 1] }>();
 const stage = useTemplateRef<HTMLDivElement>('stage');
+let touchPinching = false;
 const {
   frameStyle,
   magnified,
   dragging,
   toggle,
   reset,
+  touchTransform,
+  touchToggle,
   startDrag,
   moveDrag,
   endDrag,
@@ -24,27 +28,50 @@ const {
   stage,
   () => ({ width: props.photo.width || 4, height: props.photo.height || 3 }),
   () => props.photo.id,
+  () => touchPinching,
 );
-defineExpose({ toggle, reset });
-let touchStart: Touch | undefined;
-function startSwipe(event: TouchEvent) {
-  touchStart =
-    !magnified.value && event.touches.length === 1
-      ? event.touches[0]
-      : undefined;
+const touch = createPhotoTouch({
+  magnified: () => magnified.value,
+  move: (direction) => emit('move', direction),
+  toggle: (point) => touchToggle(point.x, point.y),
+  transform: touchTransform,
+});
+watch(() => props.photo.id, cancelTouch);
+function resetStage() {
+  cancelTouch();
+  reset();
 }
-function endSwipe(event: TouchEvent) {
-  const start = touchStart;
-  touchStart = undefined;
-  if (!start || event.touches.length || magnified.value) return;
-  const end = Array.from(event.changedTouches).find(
-    (touch) => touch.identifier === start.identifier,
+defineExpose({ toggle, reset: resetStage });
+let lastTouchEnd = -Infinity;
+function stageTouches(touches: TouchList) {
+  // targetTouches 只包含同一目标节点上的触点，第二指可能落在舞台留白上。
+  return Array.from(touches).filter(
+    ({ target }) => target instanceof Node && stage.value?.contains(target),
   );
-  if (!end) return;
-  const dx = end.clientX - start.clientX;
-  const dy = end.clientY - start.clientY;
-  if (Math.abs(dx) >= 55 && Math.abs(dx) > Math.abs(dy) * 1.5)
-    emit('move', dx > 0 ? -1 : 1);
+}
+function onDoubleClick(event: MouseEvent) {
+  if (event.timeStamp - lastTouchEnd > 500)
+    toggle(event.clientX, event.clientY);
+}
+function cancelTouch() {
+  touchPinching = false;
+  touch.cancel();
+}
+function onTouchStart(event: TouchEvent) {
+  const points = stageTouches(event.touches);
+  touchPinching = points.length >= 2;
+  if (touch.start(points, event.touches.length) && event.cancelable)
+    event.preventDefault();
+}
+function onTouchMove(event: TouchEvent) {
+  if (touch.update(stageTouches(event.touches), event.cancelable))
+    event.preventDefault();
+}
+function onTouchEnd(event: TouchEvent) {
+  lastTouchEnd = event.timeStamp;
+  const remaining = stageTouches(event.touches);
+  touchPinching = remaining.length >= 2;
+  touch.end(remaining, Array.from(event.changedTouches), event.timeStamp);
 }
 </script>
 
@@ -56,18 +83,19 @@ function endSwipe(event: TouchEvent) {
     :style="{ '--aspect': (photo.width || 4) / (photo.height || 3) }"
     tabindex="0"
     role="region"
-    aria-label="照片画布：桌面捏合或 Ctrl 加滚轮缩放，双击或 Z 放大与复位；加减号缩放，0 复位，放大后方向键平移"
+    aria-label="照片画布：双指或 Ctrl 加滚轮缩放，双击放大或复位；加减号缩放，0 复位，放大后可拖动或用方向键平移"
     @keydown="keydown"
     @pointerdown="startDrag"
     @pointermove="moveDrag"
     @pointerup="endDrag"
     @pointercancel="endDrag"
     @lostpointercapture="endDrag"
-    @dblclick="toggle($event.clientX, $event.clientY)"
+    @dblclick="onDoubleClick"
     @dragstart.prevent
-    @touchstart.passive="startSwipe"
-    @touchend.passive="endSwipe"
-    @touchcancel="touchStart = undefined"
+    @touchstart="onTouchStart"
+    @touchmove="onTouchMove"
+    @touchend.passive="onTouchEnd"
+    @touchcancel="cancelTouch"
   >
     <div
       class="photo-frame"
@@ -145,9 +173,13 @@ function endSwipe(event: TouchEvent) {
   height: var(--view-height);
   background: var(--stage);
   overflow: hidden;
-  touch-action: pan-y pinch-zoom;
+  touch-action: pan-y;
   user-select: none;
 }
+.stage.is-magnified {
+  touch-action: none;
+}
+
 @media (hover: hover) and (pointer: fine) {
   .stage {
     cursor: zoom-in;

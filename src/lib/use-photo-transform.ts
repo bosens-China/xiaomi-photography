@@ -11,6 +11,7 @@ export function usePhotoTransform(
   stage: Ref<HTMLElement | null>,
   image: () => Size,
   identity: () => string,
+  touchPinching: () => boolean = () => false,
 ) {
   const bounds = ref<Size>({ width: 0, height: 0 });
   const value = ref({ ...FIT });
@@ -47,7 +48,6 @@ export function usePhotoTransform(
       : { x: 0, y: 0 };
   }
   function zoom(scale: number, x?: number, y?: number) {
-    if (!desktop.value) return;
     value.value = zoomAt(
       value.value,
       scale,
@@ -61,6 +61,24 @@ export function usePhotoTransform(
     if (magnified.value) reset();
     else zoom(2, x, y);
     stage.value?.focus({ preventScroll: true });
+  }
+  function touchToggle(x: number, y: number) {
+    if (magnified.value) reset();
+    else zoom(2, x, y);
+  }
+  function touchTransform(
+    scaleFactor: number,
+    previous: { x: number; y: number },
+    current: { x: number; y: number },
+  ) {
+    value.value = zoomAt(
+      value.value,
+      value.value.scale * scaleFactor,
+      anchor(previous.x, previous.y),
+      frame.value,
+      bounds.value,
+      { x: current.x - previous.x, y: current.y - previous.y },
+    );
   }
   function pan(x: number, y: number) {
     value.value = boundTransform(
@@ -97,12 +115,22 @@ export function usePhotoTransform(
   // Safari 使用 GestureEvent；Chromium/Firefox 的触控板捏合使用 ctrl+wheel。
   type Gesture = Event & { scale: number; clientX: number; clientY: number };
   function gestureStart(event: Event) {
+    // iPad 等同时支持触摸和鼠标的设备可能也发出 WebKit 原生手势。
+    // 双指触屏由 touchmove 处理，不能与触控板路径叠加。
+    if (touchPinching()) {
+      event.preventDefault();
+      return;
+    }
     if (!desktop.value) return;
     event.preventDefault();
     gesturing = true;
     gestureScale = value.value.scale;
   }
   function gestureChange(event: Event) {
+    if (touchPinching()) {
+      event.preventDefault();
+      return;
+    }
     if (!desktop.value || !gesturing) return;
     event.preventDefault();
     const e = event as Gesture;
@@ -145,8 +173,7 @@ export function usePhotoTransform(
     dragging.value = false;
   }
   function keydown(event: KeyboardEvent) {
-    if (!desktop.value || event.ctrlKey || event.metaKey || event.altKey)
-      return;
+    if (event.ctrlKey || event.metaKey || event.altKey) return;
     if (['+', '=', '-', '0'].includes(event.key)) {
       event.preventDefault();
       event.stopPropagation();
@@ -204,6 +231,8 @@ export function usePhotoTransform(
     dragging,
     toggle,
     reset,
+    touchToggle,
+    touchTransform,
     startDrag,
     moveDrag,
     endDrag,
