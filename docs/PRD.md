@@ -21,3 +21,5 @@
 - 初始期选自小米徕卡全球影像大赛 2026 中国获奖作品，保留作者和官方出处。此前归档已移除。
 - 周刊随仓库保存为 JSON。照片使用远端地址，记录原始像素宽高，并可提供不同宽度的同画幅缩略图。各端由浏览器选择尺寸并加载。
 - 推送到 main 后，GitHub Pages 工作流校验并构建仓库中的 JSON。格式和样例见[周刊 JSON 格式](./issue-json.md)。
+- GitHub Pages 是站点的自动部署渠道；关闭 Vercel Git 自动部署和 CodeRabbit 自动 PR 审查。
+- JSON 可直接提交到 `main` 并触发构建发布，不要求经过 PR 合并。保留 Release Please 的版本发布 PR，仅管理版本号、CHANGELOG 和 GitHub Release，不阻塞内容上线。

@@ -77,5 +77,6 @@
 ## CI 检查要点
 
 - `main` 的推送触发 `deploy`；ChatGPT 负责定时检查，GitHub Actions 负责校验、构建和 Pages 发布。
+- GitHub 连接具备写入权限且 `main` 未要求 PR 时，JSON 直接提交到 `main` 即可上线。Release Please 的版本发布 PR 是独立流程，不需要等待其合并。若以后启用分支保护或规则集，需同步检查自动更新权限。
 - 工作流停用时不会执行触发事件。公开仓库的定时工作流可能因 60 天无活动被停用，见[GitHub 官方说明](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows)。
 - 如果以后改为从 Actions 中写入 JSON，使用仓库默认 `GITHUB_TOKEN` 推送不会再触发新的 `push` 工作流；需要显式调度或调整执行方式。当前方案使用 ChatGPT 的 GitHub 连接推送，见[GitHub 触发规则](https://docs.github.com/en/actions/concepts/security/github_token#when-github_token-triggers-workflow-runs)。

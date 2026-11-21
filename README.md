@@ -13,6 +13,8 @@ pnpm dev
 
 `pnpm build` 校验周刊 JSON、检查类型并生成静态网页。GitHub Pages 部署路径是 `/xiaomi-photography/`。
 
+自动部署仅使用 GitHub Pages，关闭 Vercel Git 自动部署和 CodeRabbit 自动 PR 审查。JSON 可直接提交到 `main` 并触发构建发布；Release Please 的版本发布 PR 单独管理版本号、CHANGELOG 和 GitHub Release，不是内容上线的前置条件。
+
 ## 发布周刊
 
 1. 按[周刊 JSON 格式](docs/issue-json.md)在 `src/data/issues/` 新增 `YYYY-MM-DD.json`。
