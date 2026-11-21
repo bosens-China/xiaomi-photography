@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.2.1...v1.3.0) (2026-11-21)
+
+
+### Features
+
+* 迁移 Astro 摄影周刊并完善云端更新说明 ([636ceee](https://github.com/bosens-China/xiaomi-photography/commit/636ceee5271f51b0be984b4732d90a5d4a9ead73))
+
 ## [1.2.1](https://github.com/bosens-China/xiaomi-photography/compare/v1.2.0...v1.2.1) (2025-03-23)
 
 
