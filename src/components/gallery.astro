@@ -15,21 +15,21 @@ import GalleryImage from './gallery-image.astro';
 interface Props {
   issue: Issue;
   issues: Issue[];
+  issueNumber: number;
 }
 
-const { issue, issues } = Astro.props;
+const { issue, issues, issueNumber } = Astro.props;
 const featured =
   issue.photos.find(({ width, height }) => width >= height) ?? issue.photos[0];
 
-const currentIndex = issues.findIndex((entry) => entry.date === issue.date);
-const issueNumber = issues.length - currentIndex;
+const currentIndex = issues.findIndex((entry) => entry.slug === issue.slug);
 const newerIssue = currentIndex > 0 ? issues[currentIndex - 1] : undefined;
 const olderIssue =
   currentIndex >= 0 && currentIndex < issues.length - 1
     ? issues[currentIndex + 1]
     : undefined;
 ---
-<main class="shell home pt-5 sm:pt-8" data-issue={issue.date}>
+<main class="shell home pt-5 sm:pt-8" data-issue={issue.slug}>
   <section
     class="hero relative isolate grid items-center min-h-[380px] sm:min-h-[430px] overflow-hidden rounded-xl border border-border/40 bg-[#121214] text-[#fafafa] shadow-sm"
     aria-labelledby="hero-title"
@@ -82,7 +82,7 @@ const olderIssue =
     </div>
     <a
       class="feature-credit"
-      href={photoUrl(issue.date, featured.id)}
+      href={photoUrl(issue.slug, featured.id)}
       data-photo={featured.id}
     >
       <span>封面：{featured.name} · {featured.userName}</span>
@@ -119,7 +119,7 @@ const olderIssue =
             {olderIssue ? (
               <a
                 class="control"
-                href={issueUrl(olderIssue.date)}
+                href={issueUrl(olderIssue.slug)}
                 title={`上一期：${olderIssue.date} ${olderIssue.title}`}
               >
                 <LeftOutlined aria-hidden="true" class="text-[10px]" />
@@ -137,7 +137,7 @@ const olderIssue =
             {newerIssue ? (
               <a
                 class="control"
-                href={issueUrl(newerIssue.date)}
+                href={issueUrl(newerIssue.slug)}
                 title={`下一期：${newerIssue.date} ${newerIssue.title}`}
               >
                 <span>下一期</span>
@@ -171,15 +171,14 @@ const olderIssue =
             </div>
             <ul class="m-0 p-1.5 list-none max-h-72 overflow-y-auto flex flex-col gap-1">
               {issues.map((entry, idx) => {
-                const vol = issues.length - idx;
-                const isCurrent = entry.date === issue.date;
+                const isCurrent = entry.slug === issue.slug;
                 const cover =
                   entry.photos.find(({ width, height }) => width >= height) ??
                   entry.photos[0];
                 return (
                   <li>
                     <a
-                      href={issueUrl(entry.date)}
+                      href={issueUrl(entry.slug)}
                       aria-current={isCurrent ? 'page' : undefined}
                       class:list={[
                         'group flex items-center gap-3 p-2 rounded-md text-left transition-colors',
@@ -189,17 +188,10 @@ const olderIssue =
                       ]}
                     >
                       <div class="w-12 h-9 shrink-0 rounded overflow-hidden border border-border bg-secondary">
-                        <GalleryImage
-                          photo={cover}
-                          sizes="96px"
-                        />
+                        {cover && <GalleryImage photo={cover} sizes="96px" />}
                       </div>
                       <div class="min-w-0 flex-1">
                         <div class="flex items-center gap-1.5 text-xs">
-                          <span class="font-mono font-semibold tabular-nums">
-                            VOL.{String(vol).padStart(2, '0')}
-                          </span>
-                          <span class="text-muted-foreground">·</span>
                           <time class="font-mono text-muted-foreground tabular-nums">
                             {entry.date}
                           </time>
@@ -231,7 +223,7 @@ const olderIssue =
         <li>
           <a
             class="photo-card group"
-            href={photoUrl(issue.date, photo.id)}
+            href={photoUrl(issue.slug, photo.id)}
             data-photo={photo.id}
           >
             <div
@@ -263,7 +255,7 @@ const olderIssue =
       >
         {olderIssue ? (
           <a
-            href={issueUrl(olderIssue.date)}
+            href={issueUrl(olderIssue.slug)}
             class="card-surface flex items-center gap-3 px-4 py-3 transition-colors hover:bg-accent sm:max-w-[48%]"
           >
             <LeftOutlined aria-hidden="true" class="text-xs text-muted-foreground shrink-0" />
@@ -282,7 +274,7 @@ const olderIssue =
 
         {newerIssue && (
           <a
-            href={issueUrl(newerIssue.date)}
+            href={issueUrl(newerIssue.slug)}
             class="card-surface flex items-center justify-end gap-3 px-4 py-3 text-right transition-colors hover:bg-accent sm:max-w-[48%] sm:ml-auto"
           >
             <div class="min-w-0">

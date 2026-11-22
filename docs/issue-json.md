@@ -1,6 +1,6 @@
 # 周刊 JSON 格式
 
-每期使用 `src/data/issues/YYYY-MM-DD.json`。文件名与 `date` 一致，日期最大的期次显示在首页。按 `photos` 的顺序展示照片和切换详情。
+每个发布日期可并排展示国内版和国际版。国内版使用 `src/data/issues/YYYY-MM-DD.json`，国际版使用 `src/data/issues/YYYY-MM-DD-international.json`。两份文件的 `date` 相同；国际版必须显式标为 `edition: "international"`。这样的地址设计保留已有国内版和作品链接。首页以日期倒序排列；只有一版的旧期仍可浏览。
 
 ## 周刊
 
@@ -9,7 +9,14 @@
 | `date` | 字符串，必填 | 发布日期，格式为 `YYYY-MM-DD` |
 | `title` | 字符串，必填 | 本期标题 |
 | `sourceUrl` | HTTPS URL，可选 | 本期官方出处或来源链接 |
-| `photos` | 对象数组，必填 | 至少一件作品 |
+| `edition` | `domestic` / `international` | 省略视为国内版 |
+| `status` | `published` / `external` / `empty` | 省略视为已有的有图版 |
+| `photos` | 对象数组，必填 | 有图版至少一件作品；外链版和空期填写 `[]` |
+| `entries` | 对象数组，外链版必填 | 至少一件，包含原文 `name` 和 `userName`，不填写图片地址 |
+
+- 有图版按 `photos` 的顺序展示照片和切换详情。新增图片需先具有明确转载许可。
+- 外链版必须提供 HTTPS `sourceUrl`，本站显示名单并链接到官方获奖页，不生成照片详情，也不嵌入图片。
+- 有变化的新日期可用同一提交新增国内版、国际版。某一版无新增时使用 `status: "empty"` 和空 `photos` 明示，不复制旧内容，不生成空详情页。两版都无变化时无需创建新一期。
 
 ## 作品
 
@@ -49,6 +56,22 @@
         }
       ]
     }
+  ]
+}
+```
+
+外链版示例（文件名 `2026-11-21-international.json`；标题和署名为占位示例）：
+
+```json
+{
+  "date": "2026-11-21",
+  "edition": "international",
+  "status": "external",
+  "title": "小米影像大赛国际获奖作品",
+  "sourceUrl": "https://event.mi.com/global/xiaomiImageryawards/award-works",
+  "photos": [],
+  "entries": [
+    { "name": "官方获奖作品名", "userName": "官方摄影师署名" }
   ]
 }
 ```

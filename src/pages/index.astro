@@ -1,27 +1,106 @@
 ---
 import Site from '@/layouts/site.astro';
-import Gallery from '@/components/gallery.astro';
-import { getIssues } from '@/lib/issues';
-import { homeUrl } from '@/lib/urls';
+import GalleryImage from '@/components/gallery-image.astro';
+import { getIssueTimeline } from '@/lib/issues';
+import { editionLabels, editions } from '@/lib/issue-timeline';
+import { homeUrl, issueUrl } from '@/lib/urls';
 
-const issues = await getIssues();
-const issue = issues[0];
-const legacy = issues.map(({ date, photos }) => ({ date, ids: photos.map(({ id }) => id) }));
+const timeline = await getIssueTimeline();
+const legacy = timeline.flatMap(({ editions: byEdition }) => editions.flatMap((edition) => {
+  const issue = byEdition[edition];
+  return issue && issue.status !== 'empty'
+    ? [{ slug: issue.slug, ids: issue.photos.map(({ id }) => id) }]
+    : [];
+}));
 ---
-<Site sourceUrl={issue.sourceUrl}>
+<Site>
   <script define:vars={{ legacy, homeUrl }}>
     if (location.hash.startsWith('#/')) {
       const [path, query] = location.hash.slice(1).split('?');
-      const date = new URLSearchParams(query).get('issue');
+      const slug = new URLSearchParams(query).get('issue');
       const id = path.match(/^\/preview\/([\w-]+)$/)?.[1];
       if (id) {
-        const match = legacy.find((entry) => (!date || entry.date === date) && entry.ids.includes(id));
-        location.replace(match ? `${homeUrl}issues/${match.date}/photos/${id}/` : `${homeUrl}404.html`);
-      } else if (date && legacy.some((entry) => entry.date === date)) {
-        location.replace(`${homeUrl}issues/${date}/`);
-      }
-      else history.replaceState(history.state, '', location.pathname);
+        const match = legacy.find((entry) => (!slug || entry.slug === slug) && entry.ids.includes(id));
+        location.replace(match ? `${homeUrl}issues/${match.slug}/photos/${id}/` : `${homeUrl}404.html`);
+      } else if (slug && legacy.some((entry) => entry.slug === slug)) {
+        location.replace(`${homeUrl}issues/${slug}/`);
+      } else history.replaceState(history.state, '', location.pathname);
     }
   </script>
-  <Gallery issue={issue} issues={issues} />
+  <main class="shell timeline">
+    <header class="timeline-intro">
+      <h1>摄影周刊</h1>
+      <p>从镜头里，看见日常。按日期浏览国内与国际获奖作品。</p>
+    </header>
+    {timeline.map(({ date, editions: byEdition, number }) => (
+      <section class="timeline-group" id={`issue-${date}`} aria-labelledby={`date-${date}`}>
+        <h2 id={`date-${date}`}>
+          <time datetime={date}>{date.replaceAll('-', '.')}</time>
+          <span>VOL.{String(number).padStart(2, '0')}</span>
+        </h2>
+        <div class="edition-grid">
+          {editions.map((edition) => {
+            const issue = byEdition[edition];
+            const cover = issue?.photos.find(({ width, height }) => width >= height) ?? issue?.photos[0];
+            return (
+              <article class:list={['card-surface edition', { 'edition-empty': !cover }]}>
+                {issue && issue.status !== 'empty' ? (
+                  <a class="edition-link" href={issueUrl(issue.slug)}>
+                    {cover && <div class="edition-cover">
+                      <GalleryImage photo={cover} sizes="(min-width: 1400px) 640px, (min-width: 640px) 50vw, 100vw" />
+                    </div>}
+                    <div class="edition-copy">
+                      <h3>{editionLabels[edition]}版</h3>
+                      <p>{issue.title}</p>
+                      <span>{cover ? issue.photos.length : issue.entries?.length} 件作品 · {cover ? '浏览作品' : '查看获奖名单'} →</span>
+                    </div>
+                  </a>
+                ) : (
+                  <div class="edition-copy">
+                    <h3>{editionLabels[edition]}版</h3>
+                    <p>{issue?.status === 'empty' ? '本期暂无新增作品' : '本期未收录此版本'}</p>
+                  </div>
+                )}
+              </article>
+            );
+          })}
+        </div>
+      </section>
+    ))}
+  </main>
 </Site>
+
+<script>
+  import '@/lib/gallery-browser';
+</script>
+
+<style>
+  .timeline { padding-block: clamp(1.5rem, 5vw, 3.5rem); }
+  .timeline-intro { margin-bottom: clamp(2rem, 6vw, 3.5rem); }
+  .timeline-intro h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); line-height: 1.15; }
+  .timeline-intro p { color: var(--muted); margin: 0.6rem 0 0; }
+  .timeline-group { margin-bottom: 2.8rem; scroll-margin-top: calc(var(--header-height) + 1rem); }
+  .timeline-group h2 {
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin: 0 0 0.9rem;
+    font-size: 1.3rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .timeline-group h2 span { font-size: 0.7rem; color: var(--muted); font-family: monospace; }
+  .edition-grid { display: grid; gap: 0.9rem; grid-template-columns: minmax(0, 1fr); }
+  .edition { overflow: hidden; min-width: 0; }
+  .edition-empty { display: grid; align-content: center; min-height: 7rem; }
+  .edition-link { display: block; height: 100%; }
+  .edition-link:focus-visible { outline-offset: -3px; }
+  .edition-cover { aspect-ratio: 16 / 7; overflow: hidden; background: var(--surface-alt); }
+  .edition-copy { padding: 0.85rem 1rem 1rem; }
+  .edition-copy h3 { margin: 0; font-size: 1.05rem; }
+  .edition-copy p { margin: .2rem 0; color: var(--muted); font-size: .875rem; }
+  .edition-copy span { display: inline-block; margin-top: .45rem; color: var(--muted); font-size: .75rem; }
+  .edition-link:hover h3 { text-decoration: underline; text-underline-offset: .2em; }
+  @media (min-width: 640px) {
+    .edition-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+</style>

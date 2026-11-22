@@ -2,15 +2,69 @@
 import type { GetStaticPaths } from 'astro';
 import Gallery from '@/components/gallery.astro';
 import Site from '@/layouts/site.astro';
-import { getIssues } from '@/lib/issues';
+import { editionLabels } from '@/lib/issue-timeline';
+import { getIssueTimeline } from '@/lib/issues';
+import { homeUrl, issueUrl } from '@/lib/urls';
 
 export const getStaticPaths = (async () => {
-  const issues = await getIssues();
-  return issues.map((issue) => ({ params: { issue: issue.date }, props: { issue, issues } }));
+  const timeline = await getIssueTimeline();
+  return timeline.flatMap(({ editions, number }) => Object.values(editions).flatMap((issue) => {
+    if (issue.status === 'empty') return [];
+    const sibling = editions[issue.edition === 'domestic' ? 'international' : 'domestic'];
+    const issues = timeline.flatMap(({ editions: entries }) => {
+      const entry = entries[issue.edition];
+      return entry && entry.status !== 'empty' ? [entry] : [];
+    });
+    return [{ params: { issue: issue.slug }, props: { issue, issues, sibling, number } }];
+  }));
 }) satisfies GetStaticPaths;
 
-const { issue, issues } = Astro.props;
+const { issue, issues, sibling, number } = Astro.props;
+const siblingUrl = sibling && sibling.status !== 'empty' ? issueUrl(sibling.slug) : undefined;
+const index = issues.findIndex(({ slug }) => slug === issue.slug);
+const older = issues[index + 1];
+const newer = issues[index - 1];
+const timelineUrl = `${homeUrl}#issue-${issue.date}`;
 ---
 <Site title={`${issue.title} · 光影集`} description={issue.title} sourceUrl={issue.sourceUrl}>
-  <Gallery issue={issue} issues={issues} />
+  <nav class="shell issue-links" aria-label="周刊版本">
+    <a class="control" href={timelineUrl}>返回周刊时间线</a>
+    {sibling && siblingUrl && (
+      <a class="control" href={siblingUrl}>同日的{editionLabels[sibling.edition]}版</a>
+    )}
+  </nav>
+  {issue.status === 'external' ? (
+    <main class="shell external-edition">
+      <header class="external-header">
+        <p><time datetime={issue.date}>{issue.date}</time> · {editionLabels[issue.edition]}版</p>
+        <h1>{issue.title}</h1>
+        <p>本站仅整理获奖名单，照片及作品说明请在小米官方页面查看。</p>
+        <a class="control primary" href={issue.sourceUrl} target="_blank" rel="noopener noreferrer">前往小米官方获奖页面</a>
+      </header>
+      <ol class="credit-list" aria-label="获奖作品名单">
+        {issue.entries?.map(({ name, userName }) => (
+          <li><strong>{name}</strong><span>{userName}</span></li>
+        ))}
+      </ol>
+      {(older || newer) && (
+        <nav class="issue-links" aria-label="相邻期次切换">
+          {older && <a class="control" href={issueUrl(older.slug)}>上一期 · {older.date}</a>}
+          {newer && <a class="control" href={issueUrl(newer.slug)}>下一期 · {newer.date}</a>}
+        </nav>
+      )}
+    </main>
+  ) : (
+    <Gallery issue={issue} issues={issues} issueNumber={number} />
+  )}
 </Site>
+
+<style>
+  .issue-links { display: flex; flex-wrap: wrap; gap: .65rem; padding-top: 1rem; }
+  .external-edition { padding-block: 2rem 4rem; }
+  .external-header { margin-bottom: 1.5rem; }
+  .external-header h1 { margin: .25rem 0; line-height: 1.2; font-size: clamp(1.5rem, 4vw, 2.25rem); }
+  .external-header p { color: var(--muted); }
+  .credit-list { padding-inline-start: 1.8rem; }
+  .credit-list li { padding: .75rem .35rem; border-top: 1px solid var(--border); overflow-wrap: anywhere; }
+  .credit-list li span { display: block; color: var(--muted); font-size: .875rem; }
+</style>

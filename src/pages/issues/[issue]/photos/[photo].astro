@@ -3,34 +3,30 @@ import type { GetStaticPaths } from 'astro';
 import { LeftOutlined, CalendarOutlined } from '@ant-design/icons-vue';
 import PhotoViewer from '@/components/photo-viewer.vue';
 import Site from '@/layouts/site.astro';
-import { getIssues } from '@/lib/issues';
-import { homeUrl, issueUrl, photoUrl } from '@/lib/urls';
+import { getIssueTimeline } from '@/lib/issues';
+import { issueUrl, photoUrl } from '@/lib/urls';
 
 export const getStaticPaths = (async () => {
-  const issues = await getIssues();
-  return issues.flatMap(({ date, title, photos, sourceUrl }, issueIdx) => {
-    const isLatest = issueIdx === 0;
-    const vol = issues.length - issueIdx;
-    return photos.map((item, index) => {
-      const previous = photos[index - 1];
-      const next = photos[index + 1];
-      return {
-        params: { issue: date, photo: item.id },
-        props: {
-          date,
-          issueTitle: title,
-          vol,
-          isLatest,
-          item,
-          index,
-          sourceUrl,
-          count: photos.length,
-          previous: previous && photoUrl(date, previous.id),
-          next: next && photoUrl(date, next.id),
-        },
-      };
-    });
-  });
+  const timeline = await getIssueTimeline();
+  return timeline.flatMap(({ editions, number: vol }) => Object.values(editions).flatMap(({ slug, date, title, photos, sourceUrl }) => photos.map((item, index) => {
+    const previous = photos[index - 1];
+    const next = photos[index + 1];
+    return {
+      params: { issue: slug, photo: item.id },
+      props: {
+        slug,
+        date,
+        issueTitle: title,
+        vol,
+        item,
+        index,
+        sourceUrl,
+        count: photos.length,
+        previous: previous && photoUrl(slug, previous.id),
+        next: next && photoUrl(slug, next.id),
+      },
+    };
+  })));
 }) satisfies GetStaticPaths;
 
 const {
@@ -38,14 +34,14 @@ const {
   date,
   issueTitle,
   vol,
-  isLatest,
+  slug,
   sourceUrl,
   index,
   count,
   previous,
   next,
 } = Astro.props;
-const back = `${isLatest ? homeUrl : issueUrl(date)}?from=photo`;
+const back = `${issueUrl(slug)}?from=photo`;
 ---
 <Site
   title={`${item.name} · 光影集`}
