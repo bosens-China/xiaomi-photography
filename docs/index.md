@@ -8,7 +8,3 @@
 
 - [周刊 JSON 格式](./issue-json.md)
 - [每周 CI 更新任务](./weekly-update-task.md)
-
-## 进行中的需求
-
-- [每周 CI 更新](./work/weekly-cloud-update/PRD.md)

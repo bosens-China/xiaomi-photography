@@ -1,6 +1,6 @@
 # 每周 CI 更新任务
 
-抓取程序与工作流已在仓库实现，可在本地运行；远端 Actions 的启用、提交权限和 Pages 发布仍需在推送后验收。
+GitHub Actions 负责官方来源同步、数据校验、构建与 GitHub Pages 发布；配置和代码随远端 `main` 维护，也可在本地运行同步程序。
 
 ## 本地执行
 
@@ -58,4 +58,4 @@ pnpm build
 3. 检查 Pages 显示的国内、国际版与仓库内容一致。
 4. 后续在 Actions 查看每周运行日志。公开仓库长期无活动可能使定时工作流停用，停用后需重新启用；平台规则见 [GitHub 定时事件说明](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。
 
-本地实现与远端验收状态见[每周 CI 更新需求](./work/weekly-cloud-update/PRD.md)。
+长期产品约定见[现行产品需求](./PRD.md)。
