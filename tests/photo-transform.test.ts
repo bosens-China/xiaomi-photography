@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   FIT,
   fitSize,
+  visiblePhotoSize,
   zoomAt,
   boundTransform,
 } from '../src/lib/photo-transform.ts';
@@ -73,4 +74,34 @@ test('pinch preserves image point under the moving midpoint before bounds', () =
   });
   assert.equal((120 - next.x) / next.scale, 100);
   assert.equal((80 - next.y) / next.scale, 50);
+});
+
+test('guides cover only the zoomed landscape photo, capped by the stage', () => {
+  const stage = { width: 360, height: 720 };
+  const frame = fitSize({ width: 1800, height: 900 }, stage);
+  assert.deepEqual(visiblePhotoSize(frame, stage, 1), { width: 360, height: 180 });
+  assert.deepEqual(visiblePhotoSize(frame, stage, 2), { width: 360, height: 360 });
+  assert.deepEqual(visiblePhotoSize(frame, stage, 8), stage);
+});
+
+test('guides cover only the zoomed portrait photo, capped by the stage', () => {
+  const stage = { width: 800, height: 400 };
+  const frame = fitSize({ width: 900, height: 1800 }, stage);
+  assert.deepEqual(visiblePhotoSize(frame, stage, 1), { width: 200, height: 400 });
+  assert.deepEqual(visiblePhotoSize(frame, stage, 2), { width: 400, height: 400 });
+  assert.deepEqual(visiblePhotoSize(frame, stage, 8), stage);
+});
+
+test('panning to the bounds keeps the centered guides entirely over the photo', () => {
+  const stage = { width: 360, height: 720 };
+  const frame = { width: 360, height: 180 };
+  const scale = 2;
+  const guide = visiblePhotoSize(frame, stage, scale);
+  for (const edge of [-999, 999]) {
+    const pan = boundTransform({ scale, x: edge, y: edge }, frame, stage);
+    assert.equal(pan.y, 0);
+    assert.equal(Math.abs(pan.x), 180);
+    assert.ok(Math.abs(pan.x) + guide.width / 2 <= frame.width * scale / 2);
+    assert.ok(Math.abs(pan.y) + guide.height / 2 <= frame.height * scale / 2);
+  }
 });

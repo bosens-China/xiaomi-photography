@@ -3,6 +3,7 @@ import {
   FIT,
   boundTransform,
   fitSize,
+  visiblePhotoSize,
   zoomAt,
   type Size,
 } from './photo-transform';
@@ -27,6 +28,15 @@ export function usePhotoTransform(
         }
       : undefined,
   );
+  const overlayStyle = computed(() => {
+    if (!bounds.value.width || !bounds.value.height) return undefined;
+    const { width, height } = visiblePhotoSize(
+      frame.value,
+      bounds.value,
+      value.value.scale,
+    );
+    return { width: `${width}px`, height: `${height}px` };
+  });
   const imageStyle = computed(() => ({
     transform: `translate(${value.value.x}px, ${value.value.y}px) scale(${value.value.scale})`,
   }));
@@ -229,6 +239,7 @@ export function usePhotoTransform(
   watch(identity, reset);
   return {
     frameStyle,
+    overlayStyle,
     imageStyle,
     magnified,
     dragging,

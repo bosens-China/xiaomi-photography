@@ -17,6 +17,13 @@ export function fitSize(image: Size, stage: Size): Size {
   );
   return { width: image.width * ratio, height: image.height * ratio };
 }
+// 平移只发生在超出舞台的轴上，置中的可见范围不会随平移改变。
+export function visiblePhotoSize(frame: Size, stage: Size, scale: number): Size {
+  return {
+    width: Math.min(stage.width, frame.width * scale),
+    height: Math.min(stage.height, frame.height * scale),
+  };
+}
 export function boundTransform(
   value: Transform,
   frame: Size,

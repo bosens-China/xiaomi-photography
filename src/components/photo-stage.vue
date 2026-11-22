@@ -14,6 +14,7 @@ const stage = useTemplateRef<HTMLDivElement>('stage');
 let touchPinching = false;
 const {
   frameStyle,
+  overlayStyle,
   imageStyle,
   magnified,
   dragging,
@@ -108,63 +109,65 @@ function onTouchEnd(event: TouchEvent) {
         <PhotoImage :photo="photo" original eager />
       </div>
 
-      <!-- 构图辅助网格 SVG 叠加层（带暗色衬底+亮色细线，深浅画面均清晰可见） -->
-      <svg
-        v-if="gridMode !== 'none'"
-        class="composition-overlay"
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <!-- 三分法（九宫格 Rule of Thirds: 33.33% / 66.67%） -->
-        <template v-if="gridMode === 'thirds'">
-          <g class="grid-shadow">
-            <line x1="33.333" y1="0" x2="33.333" y2="100" />
-            <line x1="66.667" y1="0" x2="66.667" y2="100" />
-            <line x1="0" y1="33.333" x2="100" y2="33.333" />
-            <line x1="0" y1="66.667" x2="100" y2="66.667" />
-          </g>
-          <g class="grid-stroke">
-            <line x1="33.333" y1="0" x2="33.333" y2="100" />
-            <line x1="66.667" y1="0" x2="66.667" y2="100" />
-            <line x1="0" y1="33.333" x2="100" y2="33.333" />
-            <line x1="0" y1="66.667" x2="100" y2="66.667" />
-          </g>
-        </template>
-
-        <!-- 黄金分割（Phi Grid 1 : 0.618 : 1 -> 38.2% / 61.8%） -->
-        <template v-else-if="gridMode === 'golden'">
-          <g class="grid-shadow">
-            <line x1="38.197" y1="0" x2="38.197" y2="100" />
-            <line x1="61.803" y1="0" x2="61.803" y2="100" />
-            <line x1="0" y1="38.197" x2="100" y2="38.197" />
-            <line x1="0" y1="61.803" x2="100" y2="61.803" />
-          </g>
-          <g class="grid-stroke">
-            <line x1="38.197" y1="0" x2="38.197" y2="100" />
-            <line x1="61.803" y1="0" x2="61.803" y2="100" />
-            <line x1="0" y1="38.197" x2="100" y2="38.197" />
-            <line x1="0" y1="61.803" x2="100" y2="61.803" />
-          </g>
-        </template>
-
-        <!-- 中心与对角线（Center Cross + Diagonals） -->
-        <template v-else-if="gridMode === 'diagonal'">
-          <g class="grid-shadow">
-            <line x1="0" y1="0" x2="100" y2="100" />
-            <line x1="100" y1="0" x2="0" y2="100" />
-            <line x1="50" y1="0" x2="50" y2="100" stroke-dasharray="4 3" />
-            <line x1="0" y1="50" x2="100" y2="50" stroke-dasharray="4 3" />
-          </g>
-          <g class="grid-stroke">
-            <line x1="0" y1="0" x2="100" y2="100" />
-            <line x1="100" y1="0" x2="0" y2="100" />
-            <line x1="50" y1="0" x2="50" y2="100" stroke-dasharray="4 3" />
-            <line x1="0" y1="50" x2="100" y2="50" stroke-dasharray="4 3" />
-          </g>
-        </template>
-      </svg>
     </div>
+
+    <!-- 构图辅助网格 SVG 叠加层（带暗色衬底+亮色细线，深浅画面均清晰可见） -->
+    <svg
+      v-if="gridMode !== 'none'"
+      class="composition-overlay"
+      :style="overlayStyle"
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <!-- 三分法（九宫格 Rule of Thirds: 33.33% / 66.67%） -->
+      <template v-if="gridMode === 'thirds'">
+        <g class="grid-shadow">
+          <line x1="33.333" y1="0" x2="33.333" y2="100" />
+          <line x1="66.667" y1="0" x2="66.667" y2="100" />
+          <line x1="0" y1="33.333" x2="100" y2="33.333" />
+          <line x1="0" y1="66.667" x2="100" y2="66.667" />
+        </g>
+        <g class="grid-stroke">
+          <line x1="33.333" y1="0" x2="33.333" y2="100" />
+          <line x1="66.667" y1="0" x2="66.667" y2="100" />
+          <line x1="0" y1="33.333" x2="100" y2="33.333" />
+          <line x1="0" y1="66.667" x2="100" y2="66.667" />
+        </g>
+      </template>
+
+      <!-- 黄金分割（Phi Grid 1 : 0.618 : 1 -> 38.2% / 61.8%） -->
+      <template v-else-if="gridMode === 'golden'">
+        <g class="grid-shadow">
+          <line x1="38.197" y1="0" x2="38.197" y2="100" />
+          <line x1="61.803" y1="0" x2="61.803" y2="100" />
+          <line x1="0" y1="38.197" x2="100" y2="38.197" />
+          <line x1="0" y1="61.803" x2="100" y2="61.803" />
+        </g>
+        <g class="grid-stroke">
+          <line x1="38.197" y1="0" x2="38.197" y2="100" />
+          <line x1="61.803" y1="0" x2="61.803" y2="100" />
+          <line x1="0" y1="38.197" x2="100" y2="38.197" />
+          <line x1="0" y1="61.803" x2="100" y2="61.803" />
+        </g>
+      </template>
+
+      <!-- 中心与对角线（Center Cross + Diagonals） -->
+      <template v-else-if="gridMode === 'diagonal'">
+        <g class="grid-shadow">
+          <line x1="0" y1="0" x2="100" y2="100" />
+          <line x1="100" y1="0" x2="0" y2="100" />
+          <line x1="50" y1="0" x2="50" y2="100" stroke-dasharray="4 3" />
+          <line x1="0" y1="50" x2="100" y2="50" stroke-dasharray="4 3" />
+        </g>
+        <g class="grid-stroke">
+          <line x1="0" y1="0" x2="100" y2="100" />
+          <line x1="100" y1="0" x2="0" y2="100" />
+          <line x1="50" y1="0" x2="50" y2="100" stroke-dasharray="4 3" />
+          <line x1="0" y1="50" x2="100" y2="50" stroke-dasharray="4 3" />
+        </g>
+      </template>
+    </svg>
   </div>
 </template>
 
@@ -201,12 +204,15 @@ function onTouchEnd(event: TouchEvent) {
 .photo-frame {
   --photo-fit: contain;
   --muted: #a1a1aa;
+}
+
+.photo-frame,
+.composition-overlay {
   position: absolute;
   left: 50%;
   top: 50%;
-  transform-origin: center;
-  aspect-ratio: var(--aspect, 1.3333);
   width: min(100cqw, calc(100cqh * var(--aspect, 1.3333)));
+  height: min(100cqh, calc(100cqw / var(--aspect, 1.3333)));
   transform: translate(-50%, -50%);
 }
 
@@ -225,10 +231,6 @@ function onTouchEnd(event: TouchEvent) {
 }
 
 .composition-overlay {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 24%);
 }
