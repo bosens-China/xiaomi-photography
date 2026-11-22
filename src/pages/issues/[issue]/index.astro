@@ -8,18 +8,16 @@ import { homeUrl, issueUrl } from '@/lib/urls';
 
 export const getStaticPaths = (async () => {
   const timeline = await getIssueTimeline();
+  const archive = timeline.flatMap(({ editions }) => Object.values(editions).filter((entry) => entry.status !== 'empty'));
   return timeline.flatMap(({ editions, number }) => Object.values(editions).flatMap((issue) => {
     if (issue.status === 'empty') return [];
     const sibling = editions[issue.edition === 'domestic' ? 'international' : 'domestic'];
-    const issues = timeline.flatMap(({ editions: entries }) => {
-      const entry = entries[issue.edition];
-      return entry && entry.status !== 'empty' ? [entry] : [];
-    });
-    return [{ params: { issue: issue.slug }, props: { issue, issues, sibling, number } }];
+    const issues = archive.filter((entry) => entry.edition === issue.edition);
+    return [{ params: { issue: issue.slug }, props: { issue, issues, archive, sibling, number } }];
   }));
 }) satisfies GetStaticPaths;
 
-const { issue, issues, sibling, number } = Astro.props;
+const { issue, issues, archive, sibling, number } = Astro.props;
 const siblingUrl = sibling && sibling.status !== 'empty' ? issueUrl(sibling.slug) : undefined;
 const index = issues.findIndex(({ slug }) => slug === issue.slug);
 const older = issues[index + 1];
@@ -27,12 +25,12 @@ const newer = issues[index - 1];
 const timelineUrl = `${homeUrl}#issue-${issue.date}`;
 ---
 <Site title={`${issue.title} · 光影集`} description={issue.title} sourceUrl={issue.sourceUrl}>
-  <nav class="shell issue-links" aria-label="周刊版本">
+  {issue.status === 'external' && <nav class="shell issue-links" aria-label="周刊版本">
     <a class="control" href={timelineUrl}>返回周刊时间线</a>
     {sibling && siblingUrl && (
       <a class="control" href={siblingUrl}>同日的{editionLabels[sibling.edition]}版</a>
     )}
-  </nav>
+  </nav>}
   {issue.status === 'external' ? (
     <main class="shell external-edition">
       <header class="external-header">
@@ -54,7 +52,7 @@ const timelineUrl = `${homeUrl}#issue-${issue.date}`;
       )}
     </main>
   ) : (
-    <Gallery issue={issue} issues={issues} issueNumber={number} />
+    <Gallery issue={issue} issues={issues} archive={archive} issueNumber={number} />
   )}
 </Site>
 

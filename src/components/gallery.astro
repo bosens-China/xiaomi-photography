@@ -9,16 +9,19 @@ import {
   DownOutlined,
 } from '@ant-design/icons-vue';
 import type { Issue } from '@/lib/issues';
+import { editionLabels } from '@/lib/issue-timeline';
 import { issueUrl, photoUrl } from '@/lib/urls';
 import GalleryImage from './gallery-image.astro';
 
 interface Props {
   issue: Issue;
   issues: Issue[];
+  archive: Issue[];
   issueNumber: number;
 }
 
-const { issue, issues, issueNumber } = Astro.props;
+const { issue, issues, archive, issueNumber } = Astro.props;
+const archiveDates = new Set(archive.map(({ date }) => date)).size;
 const featured =
   issue.photos.find(({ width, height }) => width >= height) ?? issue.photos[0];
 
@@ -113,7 +116,7 @@ const olderIssue =
         </p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-2.5">
+      <div class="issue-controls relative flex flex-wrap items-center gap-2.5">
         {issues.length > 1 && (
           <div class="inline-flex items-center gap-2" role="group" aria-label="相邻期次切换">
             {olderIssue ? (
@@ -159,18 +162,18 @@ const olderIssue =
           <summary class="control list-none select-none cursor-pointer">
             <CalendarOutlined aria-hidden="true" class="text-muted-foreground" />
             <span>选择期次</span>
-            <span class="font-mono text-xs text-muted-foreground tabular-nums">
-              ({currentIndex + 1}/{issues.length})
+            <span class="text-xs text-muted-foreground">
+              {editionLabels[issue.edition]}版
             </span>
             <DownOutlined aria-hidden="true" class="picker-chevron text-[10px] text-muted-foreground transition-transform duration-150" />
           </summary>
           <div class="issue-popover">
             <div class="px-3 py-2 border-b border-border flex items-center justify-between text-xs text-muted-foreground">
               <span class="font-medium text-foreground">全部周刊归档</span>
-              <span class="font-mono tabular-nums">共 {issues.length} 期</span>
+              <span class="font-mono tabular-nums">共 {archiveDates} 期</span>
             </div>
             <ul class="m-0 p-1.5 list-none max-h-72 overflow-y-auto flex flex-col gap-1">
-              {issues.map((entry, idx) => {
+              {archive.map((entry) => {
                 const isCurrent = entry.slug === issue.slug;
                 const cover =
                   entry.photos.find(({ width, height }) => width >= height) ??
@@ -195,7 +198,8 @@ const olderIssue =
                           <time class="font-mono text-muted-foreground tabular-nums">
                             {entry.date}
                           </time>
-                          {idx === 0 && (
+                          <span class="text-muted-foreground">{editionLabels[entry.edition]}版</span>
+                          {entry.date === archive[0]?.date && (
                             <span class="ml-auto rounded bg-primary px-1.5 py-0.2 text-[10px] font-medium text-primary-foreground">
                               最新
                             </span>
@@ -389,9 +393,14 @@ const olderIssue =
 }
 
 @media (max-width: 639px) {
+  .issue-picker {
+    position: static;
+  }
+
   .issue-popover {
     left: 0;
-    right: auto;
+    right: 0;
+    width: auto;
   }
 
   .hero {
