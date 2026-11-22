@@ -8,7 +8,9 @@
     "dev": "astro dev --base /",
     "build": "astro check && vue-tsc --noEmit && astro build",
     "preview": "astro preview",
-    "test": "node --experimental-strip-types --test tests/*.test.ts"
+    "test": "node --experimental-strip-types --test tests/*.test.ts",
+    "sync:issues": "node --experimental-strip-types scripts/sync-issues.ts",
+    "check:scripts": "tsc --noEmit --strict --target ES2022 --module NodeNext --skipLibCheck --allowImportingTsExtensions scripts/*.ts"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^7.0.1",
@@ -33,7 +35,8 @@
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "sharp"
     ]
   },
   "engines": {

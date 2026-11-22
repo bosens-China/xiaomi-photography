@@ -1,82 +1,61 @@
-# 每周云端更新任务
+# 每周 CI 更新任务
 
-在 ChatGPT 的定时任务中创建。执行环境选择云端，并连接能够读取、提交本仓库文件和读取 Actions 状态的 GitHub 工具；如果当前连接只有读取能力，不能完成自动推送。
+抓取程序与工作流已在仓库实现，可在本地运行；远端 Actions 的启用、提交权限和 Pages 发布仍需在推送后验收。
 
-- 名称：每周同步小米获奖作品并检查部署
-- 时间：每周一北京时间 08:00
-- 时区：`Asia/Shanghai`（UTC+8）
-- 仓库：<https://github.com/bosens-China/xiaomi-photography>
-- 分支：`main`
+## 本地执行
 
-## 启用前
+使用项目要求的 Node.js 22.12 及以上版本和 pnpm 10，无需 API Key 或额外的抓取服务。
 
-1. 将当前 Astro 迁移、`src/data/issues/`、本文档和新版 `.github/workflows/deploy.yml` 提交并推送到 `main`。
-2. 在仓库 Actions 中检查 `deploy` 的状态；若仍被停用，启用它。新版工作流已移除旧版每日三次的抓取计划。
-3. 手动运行一次 `deploy`，确认 `build` 和 `deploy` 均成功，且 Pages 可以访问。完成后再启用云端更新任务。
-
-## 可直接粘贴到 ChatGPT 的创建指令
-
-```text
-请创建一个在云端执行的重复任务，名称为“每周同步小米获奖作品并检查部署”，每周一北京时间 08:00（Asia/Shanghai，UTC+8）运行，从下一个周一开始。使用已连接的 GitHub 工具访问 bosens-China/xiaomi-photography 仓库的 main 分支。每次运行执行以下流程：
-
-一、读取仓库和官方来源
-1. 先读取 main 的最新提交、docs/issue-json.md、src/content.config.ts、src/data/issues/ 下的全部 JSON，以及 .github/workflows/deploy.yml。JSON 格式以仓库的当前约定为准。如果这些文件尚不存在，报告“新版画廊尚未部署”，不要自行创建应用或改写工作流。
-2. 在云端抓取小米官方获奖页：https://eu-imagery.event.mi.com/eu/xiaomiImageryawards/award-works 。同时检查 https://www.mi.com/visual/award 和官方页面直接链接的新届获奖页。仅以小米官方页面及其引用的图片为来源。
-3. 沿用当前画廊的范围：官方明确标记为 CN / 中国的摄影师获奖摄影作品。不要通过姓名猜国籍，不收录参赛投稿列表、宣传海报、导航图标或无完整作品信息的评委名单。
-
-二、识别实际内容变化
-4. 与所有已入库 JSON 比较，优先使用官方稳定作品标识；没有标识时，结合赛事届次、原文作者、原文作品名和原图核实是否同一作品。同一作品获得多个奖项或重复出现在网页上时只保留一条。不得仅因 CDN 域名、缩略图、查询参数或页面排版变化认定新增作品。组图沿用仓库现有的一作品一条记录方式。
-5. 仅有确认的新增作品时才新增一期 src/data/issues/YYYY-MM-DD.json，日期使用本次执行的北京时间，photos 只包含新增作品。无新增作品时，不创建空期，不复制上一期，也不单独修改日期制造提交。
-6. 官方更正了已入库作品的名称、作者、说明或实际原图时，更新原记录，保留原来的文件日期和作品 id，不另建重复记录。官方页面暂时缺失作品、抓取失败或元数据不全时，保留已有内容，报告待核实事项，不删除历史文件或作品。
-
-三、生成和验证 JSON
-7. 每期必须包含 date、title、photos，可包含 sourceUrl。每条照片必须有 id、name、userName、picUrl、width、height，可包含 desc 和 variants。原文标题、作者和说明忠实保留，不补写不存在的说明。
-8. id 只能含英文字母、数字、连字符和下划线，同一期内唯一，已入库 id 不变。date 必须是有效的 YYYY-MM-DD，且与文件名一致。photos 至少一项。图片 URL 必须为 HTTPS；width 和 height 必须来自实际图片的正整数像素尺寸，不能把缩略图尺寸当原图尺寸。无法验证必填字段的作品不推送，并报告原因。
-9. variants 非必填，只在官方提供可验证的同画幅缩略图时填写，每项为 {"url":"HTTPS地址","width":实际宽度}。不要自行拼接未经验证的图片处理参数。
-10. 推送前解析所有待写 JSON，核对必填字段、日期、期内 id 唯一性、跨期作品去重和图片尺寸。如果云端有代码执行环境，使用项目要求的 Node.js 和 packageManager，运行 pnpm install --frozen-lockfile 及 pnpm build；没有代码执行环境时，明确记录“推送前仅完成 JSON 校验，完整构建由 CI 验证”，不得声称已通过构建。
-
-四、提交、推送并检查 CI
-11. 用户授权本任务在确认有内容变化且校验通过时，直接向该仓库 main 提交和推送 JSON；允许的写入路径仅为 src/data/issues/*.json，不修改应用代码、文档、工作流、依赖或仓库设置。提交信息使用 chore(content): sync Xiaomi photography YYYY-MM-DD。无变化不提交。推送前重新读取 main，避免覆盖并发修改；有冲突先重新比较和合并，不强制推送。
-12. 通过已连接的 GitHub 用户或 GitHub App 写入仓库。若无写权限或缺少推送工具，保留生成的 JSON 并报告阻塞，不声称已经推送；不要索要或在任务文本中记录访问令牌。
-13. 每次运行都检查 deploy 工作流是否启用及最近一次运行是否异常。没有内容变化时不额外触发构建。推送后按本次提交 SHA 查找 .github/workflows/deploy.yml 对应的运行，不能用旧运行的成功状态代替本次结果。如果未触发，明确报告原因；具备已授权的手动运行能力时，可以对 main 手动触发一次并核对实际运行的 SHA，不重复触发或重跑无关任务。
-14. 跟进本次 build 和 deploy 的终态。失败时读取失败步骤和日志；只能修复由本次 JSON 引入的数据问题，应用或工作流问题只报告。等待超时或缺少 Actions 读取能力时，标为“部署未确认”，不要报告成功。成功后访问 https://bosens-china.github.io/xiaomi-photography/ ，核实新一期或更正后的内容可见；若页面仍是旧内容，记录为“线上内容待确认”。
-
-结果报告：列出是否有变化、新增/更正作品数量、JSON 路径、提交 SHA、deploy 运行链接和最终状态，以及线上内容是否确认。只有内容发生变化、执行失败或需要我处理时才发送提醒。无变化且 CI 正常时保持安静。
+```sh
+pnpm install --frozen-lockfile
+pnpm sync:issues --dry-run
+pnpm sync:issues
+pnpm check:scripts
+pnpm test
+pnpm build
 ```
 
-## JSON 示例
+`--dry-run` 会实际抓取并校验，但不写文件。命令输出北京时间日期、各来源作品数量及变更文件；失败以非零状态退出。它不在本地自动提交或推送。
 
-以下是已入库作品的格式示例，供理解结构；它不是新作品，不能在首次任务中再次导入。
+## 官方来源与收录范围
 
-```json
-{
-  "date": "2026-11-21",
-  "title": "2026 小米徕卡全球影像大赛 · 中国获奖作品",
-  "sourceUrl": "https://eu-imagery.event.mi.com/eu/xiaomiImageryawards/award-works",
-  "photos": [
-    {
-      "id": "exclusive",
-      "name": "Exclusive",
-      "userName": "Jiang Jihang",
-      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/6908f52b_f05c_4af2_9e36_10207428b1f0.jpeg?w=2373&h=3164",
-      "width": 2373,
-      "height": 3164,
-      "variants": [
-        {
-          "url": "https://img.youpin.mi-img.com/ferriswheel/30f21c54_97d8_44a9_a9c7_d1dacdcfae67.jpeg?w=900&h=1200",
-          "width": 900
-        }
-      ]
-    }
-  ]
-}
-```
+- 国内：[小米获奖页](https://www.mi.com/visual/award/winWorks)。从该页引用的脚本发现当届配置键，通过官网使用的公开 JSON 接口读取作品。
+- 国际：[小米国际获奖页](https://event.mi.com/global/xiaomiImageryawards/award-works)。从页面引用的 `main.js` 读取获奖配置，只解析字面量，不执行下载的脚本。
+- 国内版收录国内官网的完整具名获奖作品，国际版收录国际官网的完整具名获奖作品，不按摄影师国籍过滤。两版独立归档，允许跨版出现同一作品；只在同一版、同一届的归档内去重。
+- 同一作品多次获奖只收录一次；组图保持一作品一条。只有“获奖作者 / Winner”占位标题的评委选择奖沿用既有排除规则，不把作者名单当作具名作品。
+- 两个来源必须完整读取，各自独立识别赛事年份，不要求两站同步换届；空数据、字段变化、接口失败或配置数组达到页容量时停止更新，保留原文件。
 
-字段约定见[周刊 JSON 格式](./issue-json.md)。ChatGPT 的 GitHub 连接与执行环境能力需要在创建任务时确认；任务说明本身不会授予工具权限。
+## 来源核查
 
-## CI 检查要点
+- 国内官网保留 `winWorks2025` 的“中国影像辞典”获奖数据，包含阿竹的《交流》和孔若琛的《六年，和一百张面孔》。旧数据的作者字段不一定带国家标识，不能按有无国家标签决定是否收录。
+- 2026 年当前两站均展示全球获奖作品，包括《黑衣少年》/ The Boy in Black、《猫和帽子》/ Cat and Hat。各有 28 件具名作品（同一作品重复获奖合并，排除无作品名的作者奖）；这不构成往届或后续赛事一定重合的假设。
+- 国际 2025 的历史获奖记录可参见[摄影师本人获奖帖](https://www.instagram.com/p/DTSpNBLk9Dn/)，目前国际官网主地址已展示 2026 届，未据此恢复完整国际历史名单。
 
-- `main` 的推送触发 `deploy`；ChatGPT 负责定时检查，GitHub Actions 负责校验、构建和 Pages 发布。
-- GitHub 连接具备写入权限且 `main` 未要求 PR 时，JSON 直接提交到 `main` 即可上线。Release Please 的版本发布 PR 是独立流程，不需要等待其合并。若以后启用分支保护或规则集，需同步检查自动更新权限。
-- 工作流停用时不会执行触发事件。公开仓库的定时工作流可能因 60 天无活动被停用，见[GitHub 官方说明](https://docs.github.com/en/actions/how-tos/manage-workflow-runs/disable-and-enable-workflows)。
-- 如果以后改为从 Actions 中写入 JSON，使用仓库默认 `GITHUB_TOKEN` 推送不会再触发新的 `push` 工作流；需要显式调度或调整执行方式。当前方案使用 ChatGPT 的 GitHub 连接推送，见[GitHub 触发规则](https://docs.github.com/en/actions/concepts/security/github_token#when-github_token-triggers-workflow-runs)。
+## 数据更新
+
+1. 与同届、同版的全部历史记录比较，先按 `sourceIds` 匹配；旧记录按原文标题及署名匹配并补齐来源标识。来源标识结合配置行 ID 和原图路径指纹，不受列表重排和图片查询参数变化影响。
+2. 更正已有标题、署名和非空的官方作品说明时修改原记录，保留日期、作品 id 和详情地址。已有原图 URL、尺寸和缩略图保持原记录；CDN 地址变化不自动认定为作品图片更正，实际图片变更需人工核实。
+3. 确认新增作品时，以本次北京时间日期发布有图增量期，保存原图、实际宽高、作品名、作者、说明和来源标识。国内和国际使用相同画廊与详情查看器。另一版没有新增时写空期；两版都没有新增时不创建新期。没有更正时也不修改旧文件。
+4. 不删除官方页面暂时缺失的历史作品。数据先在内存中生成，复用站点 schema 校验全部变更，再暂存并替换文件；普通写入失败回滚已经替换的文件。同日同届已有有图版时追加新作品并保留旧 id；不同赛事的同日文件冲突时停止更新。
+
+原有外链名单会在原期次内补齐图片，不生成重复新期。图片尺寸使用 Astro 已有的图片元数据工具从实际图片字节探测；识别成功即取消剩余下载，最多并发四件作品。只使用官方提供、实际尺寸已验证且画幅一致的缩略图。已归档的照片复用经过校验的尺寸，无变化时不重新下载原图；必需图片无法读取或旧名单仅部分匹配时，不写入任何变更。
+
+字段约定见[周刊 JSON 格式](./issue-json.md)，入口为 `scripts/sync-issues.ts`，来源解析在 `scripts/xiaomi-source.ts`。
+
+## CI 流程
+
+- `schedule` 配置为 `0 23 * * 0`（UTC 周日 23:00），对应每周一北京时间 07:00。GitHub 调度可能延迟，不保证准点开始。
+- 定时或手动运行先抓取；普通 `main` 推送直接验证构建，不重复抓取。
+- 定时检查无变化时不提交、不构建、不部署；手动运行仍会重建发布，便于重试部署。
+- 有变化时依次执行脚本类型检查、测试、构建，只提交 `src/data/issues/*.json`，推送成功后上传并发布本次构建产物。
+- 抓取失败不会写入数据；校验或构建失败不会提交，推送失败不会部署。不使用强制推送，远端发生并发变更时本次任务失败，下一次运行从最新 `main` 重试。
+- `contents: write` 只授予构建 job；后续发布在同次工作流完成，不依赖 `GITHUB_TOKEN` 提交再触发另一次 `push`。见 [GitHub 触发规则](https://docs.github.com/en/actions/concepts/security/github_token#when-github_token-triggers-workflow-runs)。
+
+## 首次启用与验收
+
+1. 将实现、JSON 和工作流推送到远端 `main`，确认 Actions 和 GitHub Pages 的 Actions 部署已启用。
+2. 手动运行 `deploy`，检查抓取、测试、构建与部署结果；具备内容变化时，确认机器人可向 `main` 提交 JSON。分支保护禁止直接推送时需调整授权或发布策略。
+3. 检查 Pages 显示的国内、国际版与仓库内容一致。
+4. 后续在 Actions 查看每周运行日志。公开仓库长期无活动可能使定时工作流停用，停用后需重新启用；平台规则见 [GitHub 定时事件说明](https://docs.github.com/en/actions/reference/workflows-and-actions/events-that-trigger-workflows#schedule)。
+
+本地实现与远端验收状态见[每周 CI 更新需求](./work/weekly-cloud-update/PRD.md)。

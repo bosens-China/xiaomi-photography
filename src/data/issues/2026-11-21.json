@@ -2,6 +2,7 @@
   "date": "2026-11-21",
   "title": "2026 小米徕卡全球影像大赛 · 国内",
   "edition": "domestic",
+  "status": "published",
   "sourceUrl": "https://www.mi.com/visual/award/winWorks",
   "photos": [
     {
@@ -10,7 +11,12 @@
       "userName": "相飞田",
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/b253cb5e_e0a4_4f55_bcea_e12e96dca0f1.jpeg?w=1920&h=1440",
       "width": 1920,
-      "height": 1440
+      "height": 1440,
+      "desc": "不知何时起，一身黑衣成了城乡少年的视觉标签，常被视作散漫孤僻的群体，心底却藏着被看见与归属的渴望。\n定兴一职高引入“郑村武狮”。我不曾想传统文化能化作珍贵青春记忆，焕发当代生机；少年互助换位，表达欲舒展，纯粹友谊打破世俗偏见，实现双向相遇成全。\n定兴是幸运样本。还有许多被标签蒙蔽的青春，仍在寻找归属之地。",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6cfc245b14c00014ff821-960122732042a96a75d83bf2",
+        "xiaomi-2026-domestic-6af6f85e45b14c000162cf19-960122732042a96a75d83bf2"
+      ]
     },
     {
       "id": "the-beauty-of-danger",
@@ -19,11 +25,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3b36b257_a47a_4a75_b43a_a22e5700f917.jpeg?w=4096&h=3072",
       "width": 4096,
       "height": 3072,
+      "desc": "是众人对出片的追求，也是一场冰面的冒险。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/2fb90539_d582_4533_9798_851cb239af21.jpeg?w=1920&h=1440",
           "width": 1920
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f4dd799ab50001568668-f4cba80c48deb8fba53a36e3"
       ]
     },
     {
@@ -33,11 +43,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d58ebc3e_00d9_4a71_9da5_3a41104fbf26.jpeg?w=4096&h=3072",
       "width": 4096,
       "height": 3072,
+      "desc": "悠闲娱乐场漫天泡泡飞扬，孩童肆意嬉闹，老者独处于热闹之中，伸手好奇戳弄飘来的泡泡，心怀一份未泯的童心，守着属于自己的片刻宁静。欢乐是旁人的，此刻这份松弛与童趣，只属于他。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/ddfc42e7_b7b3_4d03_87f2_353715193245.jpeg?w=1920&h=1440",
           "width": 1920
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f56e45b14c000162cf15-a201597ef36c08deba5fe844"
       ]
     },
     {
@@ -47,11 +61,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/6908f52b_f05c_4af2_9e36_10207428b1f0.jpeg?w=2373&h=3164",
       "width": 2373,
       "height": 3164,
+      "desc": "一人一车一片水光 把喧嚣留在身后 此刻 天地辽阔 时光只属于自己。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/30f21c54_97d8_44a9_a9c7_d1dacdcfae67.jpeg?w=900&h=1200",
           "width": 900
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f43e45b14c000162cf14-8da40dbe7e8fde082c894ca8"
       ]
     },
     {
@@ -61,11 +79,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4ecbbe20_f158_481a_b98d_678c75a219c2.jpeg?w=3950&h=2963",
       "width": 3950,
       "height": 2963,
+      "desc": "老街老墙，光影正好。抓拍一只猫跃过，在墙上留下灵动剪影，定格下老街日常里的诗意瞬间。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/41fe0289_9f18_4ce3_9c7a_6688a6b88994.jpeg?w=1920&h=1440",
           "width": 1920
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f43e45b14c000162cf14-3b8f8c1eba07f1af9dcd7998"
       ]
     },
     {
@@ -80,6 +102,9 @@
           "url": "https://img.youpin.mi-img.com/ferriswheel/9544899e_6b82_4c12_ae29_6bdaabed7382.jpeg?w=903&h=1200",
           "width": 903
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f1c645b14c000162cf12-3fb628721ca136f004d494bd"
       ]
     },
     {
@@ -88,7 +113,11 @@
       "userName": "桂笑冬",
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/c53147ff_cade_4e17_b0b9_9408e6174d08.jpeg?w=1789&h=1790",
       "width": 1789,
-      "height": 1790
+      "height": 1790,
+      "desc": "大炮与飞鸽，战争与和平。",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f1c645b14c000162cf12-b5a39b3605f54eec63563568"
+      ]
     },
     {
       "id": "the-silent-one",
@@ -97,11 +126,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/a37347ef_baf5_4107_8ed6_59b1b3fc3558.jpeg?w=2782&h=2823",
       "width": 2782,
       "height": 2823,
+      "desc": "作品摄于毕棚沟。一个陌生大哥喊我为他拍张照，想要拍一张纪念，说十五年前曾和朋友来过，如今大家已成家奔波，再聚首已是难得。面对漫天飞雪，他感叹记忆恍如隔世。我没拍他的脸，只留下这个沉默的背影。在时光和风雪面前，语言总是多余的。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/d979af8f_041c_4041_896f_2dcf7f0a0d86.jpeg?w=1892&h=1920",
           "width": 1892
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f11645b14c000162cf11-49691379ac6a45f452b42b0e"
       ]
     },
     {
@@ -116,6 +149,9 @@
           "url": "https://img.youpin.mi-img.com/ferriswheel/02b66dea_7ee0_4960_bd41_837b4673fc8d.jpeg?w=1440&h=1920",
           "width": 1440
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f053799ab50001568665-f67726321c739641b8411fe0"
       ]
     },
     {
@@ -125,11 +161,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d949b10b_7cd8_4ac9_a7fb_b14b523881c4.jpeg?w=4080&h=2720",
       "width": 4080,
       "height": 2720,
+      "desc": "老土屋守着满树盛放的杏花，老人垂首缓步走在院中，鸡与鸽闲散踱步。山野土墙粗糙斑驳，繁花温柔铺满枝头。\n一树花开，一院烟火，岁月不疾不徐，高原人家平淡安稳的日常，藏着自然与人间共生的松弛诗意。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/614f4b80_a8bb_4389_977f_5c5fca1fd3b7.jpeg?w=1920&h=1280",
           "width": 1920
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6d1f0799ab50001b4dd80-a14a27e9b9e224b96d4dcc21"
       ]
     },
     {
@@ -144,6 +184,9 @@
           "url": "https://img.youpin.mi-img.com/ferriswheel/d3987362_2a5e_4130_bb1c_3f3bbac92f83.jpeg?w=1920&h=1433",
           "width": 1920
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6d0e9799ab50001b4dd7f-b3833572b65f5383e5a64133"
       ]
     },
     {
@@ -152,7 +195,11 @@
       "userName": "基提翁的芝诺",
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/f16a80f1_f2c6_4868_8ae6_cd0fab76d075.jpeg?w=1440&h=1920",
       "width": 1440,
-      "height": 1920
+      "height": 1920,
+      "desc": "出生在内陆，干燥封闭的童年让我对大海生出一种莫名的渴望，它就像一个我从未抵达却始终在奔赴的彼岸。这种迷恋驱使我一次次出发，从巴尔干半岛到琉球群岛，从韦斯特峡湾到黄金海岸……我试图用镜头凝视“存在”，在这些平淡的影像中，生活、死亡和新生不再泾渭分明，它们像潮水般涌来退去，留下潮湿的痕迹，只为证明一切都曾发生过。",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6cfc245b14c00014ff821-c3eacebba37d2c64a694481f"
+      ]
     },
     {
       "id": "tsagaan-idee",
@@ -160,7 +207,11 @@
       "userName": "我是赛文",
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/56d0d75a_e305_4627_b05d_f831ad4e97c9.jpeg?w=1920&h=1536",
       "width": 1920,
-      "height": 1536
+      "height": 1536,
+      "desc": "蒙古语里，“察干伊德”意为“白色的食物”，泛指以奶为原料制成的各种食品。鲜奶经过发酵、分离和温火炼制，被做成酸奶、奶豆腐、黄油等不同形态的食物。这套传统技艺至今仍保留在许多牧民家庭中。在我接触到的家庭里，从挤奶到加工，主要由女性完成。她们熟悉动物，也凭经验判断天气、温度和时间。\n我的镜头停留在这套工艺周围：草场、牛的身体、盛奶的器皿、屋里的人，还有加工间里成排的奶块。飞蛾、积水和散落在草地上的残块也进入了照片。它们和奶食一起，存在于当地的日常里。我想知道，制作一份食物需要人怎样认识动物、土地和时间，这些经验又怎样留在今天的生活中。",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6cc9745b14c00014ff820-2c72ec0706293dfa8eb4015b"
+      ]
     },
     {
       "id": "green-chestnuts-and-the-evening-bell",
@@ -169,11 +220,15 @@
       "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4b9db82f_9a92_4088_ac08_1a4c43bbc1fb.jpeg?w=1445&h=1920",
       "width": 1445,
       "height": 1920,
+      "desc": "我第一次来到val colla山谷是源于一次跨越瑞士国境的徒步，我对散落山间、与意大利接壤的几个村落产生了好奇。后来查阅资料时发现，直到2025年，这里的许多道路仍没有正式名称。人们长久以来依靠村名、旧地名以及彼此熟悉的方式辨认住所与道路。如今，这些地方性的坐标正被逐一整理，进入统一的地址系统。于是我开始反复走访这些曾由小型自治体组成、似乎始终与外界保持着一点距离的山谷村落。\n《青栗与晚钟》来自我对山谷中十余个村落的行走与拜访，以及与当地居民产生连接的过程。我认识了许多仍生活在这里的老人，也遇见一些为了远离高昂的生活成本和城市节奏而迁居于此的年轻人。这座人口持续减少并逐渐老去的边境山谷，也折射出老龄化这一全球性的现实。我试图记录这块土地在与时间互相交织中老去的状态，它发生在人身上，也发生在房屋、道路，以及与当下时代相处的方式里。",
       "variants": [
         {
           "url": "https://img.youpin.mi-img.com/ferriswheel/8adf6aab_3f16_4549_9a69_1fd058212407.jpeg?w=1444&h=1919",
           "width": 1444
         }
+      ],
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6cc9745b14c00014ff820-e2569f1acbadd9f120c6ec67"
       ]
     }
   ]

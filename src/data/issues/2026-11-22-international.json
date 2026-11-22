@@ -1,0 +1,235 @@
+{
+  "date": "2026-11-22",
+  "title": "2026 小米影像大赛 · 国际",
+  "edition": "international",
+  "status": "published",
+  "sourceUrl": "https://event.mi.com/global/xiaomiImageryawards/award-works",
+  "photos": [
+    {
+      "id": "xiaomi-af28a35884ba53cc",
+      "name": "The Boy in Black",
+      "userName": "Xiang Feitian",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae041d7ba786a0001d90f65-e14f99e94aedb8d23ae0c5f8",
+        "xiaomi-2026-international-6ae043a3ce8ad00001f6b06d-9eda8c79e416a068049c9c38"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/b253cb5e_e0a4_4f55_bcea_e12e96dca0f1.jpeg?w=1920&h=1440",
+      "width": 1920,
+      "height": 1440,
+      "desc": "At some point, wearing all black became a visual label for urban and rural teenagers. Seen as undisciplined and reclusive, they still long to be seen and to belong.\nDingxing Vocational High School introduced the “Zhengcun Martial Lion” dance. Traditional culture became part of cherished youth memories and gained new vitality. As teenagers helped one another and traded places, their urge to express themselves blossomed; pure friendship challenged prejudice, creating mutual fulfillment.\nDingxing is a fortunate example. Many young people remain clouded by labels, still seeking a place to belong."
+    },
+    {
+      "id": "xiaomi-96b48e8c1adada41",
+      "name": "The Beauty of Danger",
+      "userName": "HuanXiangDeAiGe",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae021aeba786a0001d90f5b-01240507d98e30fdc344d79d"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3b36b257_a47a_4a75_b43a_a22e5700f917.jpeg?w=4096&h=3072",
+      "width": 4096,
+      "height": 3072,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/2fb90539_d582_4533_9798_851cb239af21.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "It’s both a collective pursuit of the perfect shot and an adventure on the ice."
+    },
+    {
+      "id": "xiaomi-fbe4837a19ad5485",
+      "name": "A Noisy Corner",
+      "userName": "Chen Xiaomei",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02448ce8ad00001f6b069-ced26912c6a5cfbf1db16b8a"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d58ebc3e_00d9_4a71_9da5_3a41104fbf26.jpeg?w=4096&h=3072",
+      "width": 4096,
+      "height": 3072,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/ddfc42e7_b7b3_4d03_87f2_353715193245.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "Bubbles drift over the lively square as children play. Amid the crowd, an old man reaches out curiously to poke a passing bubble, keeping a childlike wonder and a quiet moment of his own. The joy belongs to others; This ease belongs only to him."
+    },
+    {
+      "id": "xiaomi-146f118dd5011c78",
+      "name": "Exclusive",
+      "userName": "Jiang Jihang",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02423ba786a0001d90f62-56dc5a52e1628856e39314db"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/6908f52b_f05c_4af2_9e36_10207428b1f0.jpeg?w=2373&h=3164",
+      "width": 2373,
+      "height": 3164,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/30f21c54_97d8_44a9_a9c7_d1dacdcfae67.jpeg?w=900&h=1200",
+          "width": 900
+        }
+      ],
+      "desc": "One person, one bike, and shimmering water. Leaving the noise behind, the world feels vast, and this moment belongs to me alone."
+    },
+    {
+      "id": "xiaomi-90eae6f6f342f294",
+      "name": "A Cat Leaping Against the Wall",
+      "userName": "puyonghui",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02423ba786a0001d90f62-b6b6a8e9cb2f50bc64530a7d"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4ecbbe20_f158_481a_b98d_678c75a219c2.jpeg?w=3950&h=2963",
+      "width": 3950,
+      "height": 2963,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/41fe0289_9f18_4ce3_9c7a_6688a6b88994.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "Old walls and vintage streets in perfect light. A cat leaps by, leaving a playful shadow on the wall—a quiet, poetic slice of daily life."
+    },
+    {
+      "id": "xiaomi-47b33da924be106d",
+      "name": "Shadow of a Butterfly",
+      "userName": "Bu Dan",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae0238aba786a0001d90f5f-8e0cecc3a186098095fd1606"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/266fa3d0_eeab_480b_b77f_0b68761f4811.jpeg?w=3072&h=4080",
+      "width": 3072,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/9544899e_6b82_4c12_ae29_6bdaabed7382.jpeg?w=903&h=1200",
+          "width": 903
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-e1486e93c174bb82",
+      "name": "War and Peace",
+      "userName": "Gui Xiaodong",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae0238aba786a0001d90f5f-b14f15e4377fa1b592425372"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/c53147ff_cade_4e17_b0b9_9408e6174d08.jpeg?w=1789&h=1790",
+      "width": 1789,
+      "height": 1790,
+      "desc": "Cannon and Dove, War and Peace."
+    },
+    {
+      "id": "xiaomi-d21e9746365e7266",
+      "name": "The Silent One",
+      "userName": "lizizi",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae042e9ce8ad00001f6b06b-2ad23e503a8c7122afef21c8"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/a37347ef_baf5_4107_8ed6_59b1b3fc3558.jpeg?w=2782&h=2823",
+      "width": 2782,
+      "height": 2823,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/d979af8f_041c_4041_896f_2dcf7f0a0d86.jpeg?w=1892&h=1920",
+          "width": 1892
+        }
+      ],
+      "desc": "The photograph was taken in Bipenggou. A stranger asked me to take his picture as a keepsake. Fifteen years ago he had come here with friends; now they are married and busy with their own lives, and meeting again has become rare. In the falling snow, he said the memory felt like a lifetime ago. I did not photograph his face, only his silent back. Before time and snow, words are always superfluous."
+    },
+    {
+      "id": "xiaomi-3169acae3d5ce39a",
+      "name": "Family Ties",
+      "userName": "Ei Laiya",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae042ddce8ad00001f6b06a-5bc24d0e062ad13f2daa760a"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/dcd1a750_afb0_4efb_a884_f972a2bd88f0.jpeg?w=3060&h=4080",
+      "width": 3060,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/02b66dea_7ee0_4960_bd41_837b4673fc8d.jpeg?w=1440&h=1920",
+          "width": 1440
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-c7adf35c64469458",
+      "name": "Ordinary Seasons Under the Apricot Tree",
+      "userName": "SHOUCHU2026",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02325ba786a0001d90f5e-9b4d3e26b4f930de6b53c04f"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d949b10b_7cd8_4ac9_a7fb_b14b523881c4.jpeg?w=4080&h=2720",
+      "width": 4080,
+      "height": 2720,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/614f4b80_a8bb_4389_977f_5c5fca1fd3b7.jpeg?w=1920&h=1280",
+          "width": 1920
+        }
+      ],
+      "desc": "An old earthen house beneath a blossoming apricot tree. An old man walks slowly through the yard, head bowed; chickens and pigeons wander at ease. Rough, weathered walls, branches soft with flowers.\nA tree in bloom, a courtyard of everyday warmth, time moving gently. In this calm highland daily life lies the relaxed poetry of nature and human life together."
+    },
+    {
+      "id": "xiaomi-0117fbddb1bb244d",
+      "name": "Brave Treaders of Fire",
+      "userName": "Sanzer",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02250ba786a0001d90f5d-09b4995d0abba262d32d7893"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/fb549251_6082_4e89_9760_ff9dbb5b7dbf.jpeg?w=4096&h=3057",
+      "width": 4096,
+      "height": 3057,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/d3987362_2a5e_4130_bb1c_3f3bbac92f83.jpeg?w=1920&h=1433",
+          "width": 1920
+        }
+      ]
+    },
+    {
+      "id": "xiaomi-486d003ef9470715",
+      "name": "Intertidal Zone",
+      "userName": "Zeno of Citium",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae041d7ba786a0001d90f65-ed0ac344c1b7d7306441f9df"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/f16a80f1_f2c6_4868_8ae6_cd0fab76d075.jpeg?w=1440&h=1920",
+      "width": 1440,
+      "height": 1920,
+      "desc": "Born in the inland, my dry and isolated childhood instilled in me an inexplicable longing for the sea—it was like a distant shore I had never reached but was always striving toward. This fascination drove me to set out time and again, from the Balkans to the Ryukyu Islands, from the Vestfjord to the Gold Coast… I try to gaze upon “existence” through my lens. In these unassuming images, life, death, and rebirth are no longer sharply distinguished; they ebb and flow like the tides, leaving behind damp traces—simply to prove that everything once happened."
+    },
+    {
+      "id": "xiaomi-d1e7461b628ab2a7",
+      "name": "Tsagaan Idee",
+      "userName": "Seven Liang",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae04132ba786a0001d90f64-cda0465323fbe2b330eda143"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/56d0d75a_e305_4627_b05d_f831ad4e97c9.jpeg?w=1920&h=1536",
+      "width": 1920,
+      "height": 1536,
+      "desc": "In Mongolian, “Tsagaan Idee” means “white foods,” a broad term for dairy products. Fresh milk is fermented, separated, and simmered into yogurt, milk curds, and butter—a craft still practiced in many herding households. In the families I visited, women handled the whole process, from milking to processing, relying on close knowledge of animals and experience with weather, temperature, and timing.\n            My camera lingered on grasslands, cattle, milk vessels, people indoors, and rows of dried curds; Moths, puddles, and scraps also entered the frame as part of daily life. I wanted to know, what kind of understanding of animals, land, and time is required to make the foods; and how this experience remains in life today."
+    },
+    {
+      "id": "xiaomi-8b26e911a76c11a9",
+      "name": "Green Chestnuts and the Evening Bell",
+      "userName": "Zhu Zheng",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae04132ba786a0001d90f64-1e13bace829db339b1bf3fdc"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/4b9db82f_9a92_4088_ac08_1a4c43bbc1fb.jpeg?w=1445&h=1920",
+      "width": 1445,
+      "height": 1920,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/8adf6aab_3f16_4549_9a69_1fd058212407.jpeg?w=1444&h=1919",
+          "width": 1444
+        }
+      ],
+      "desc": "I came to the Val Colla valley on a hike that took me across the Swiss border. As of 2025, many of the roads here still had no official names; people relied on village names, old place names, and their mutual familiarity to identify their homes. Since then, I have repeatedly visited the villages in the valley, getting to know the people who still live here, and gradually formed a connection with this border valley, whose population continues to decline and whose residents are gradually aging."
+    }
+  ]
+}

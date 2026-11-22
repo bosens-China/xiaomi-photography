@@ -5,6 +5,10 @@ on:
   push:
     branches: ['main']
 
+  # Monday 07:00 Asia/Shanghai = Sunday 23:00 UTC.
+  schedule:
+    - cron: '0 23 * * 0'
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -22,7 +26,13 @@ concurrency:
 
 jobs:
   build:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: write
+    outputs:
+      publish: ${{ steps.changes.outputs.publish }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,19 +50,57 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Sync Xiaomi awards
+        if: github.event_name != 'push'
+        run: pnpm sync:issues
+
+      - name: Check content changes
+        id: changes
+        shell: bash
+        run: |
+          changed=false
+          if [[ -n "$(git status --porcelain -- src/data/issues)" ]]; then
+            changed=true
+          fi
+          publish=false
+          if [[ "$GITHUB_EVENT_NAME" != schedule || "$changed" == true ]]; then
+            publish=true
+          fi
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
+
+      - name: Test project
+        if: steps.changes.outputs.publish == 'true'
+        run: |
+          pnpm check:scripts
+          pnpm test
+
       - name: Build project
+        if: steps.changes.outputs.publish == 'true'
         run: pnpm run build
 
+      - name: Commit validated content
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- src/data/issues/*.json
+          git commit -m "chore(content): sync Xiaomi photography $(TZ=Asia/Shanghai date +%F)"
+          git push origin HEAD:main
+
       - name: Upload artifact
+        if: steps.changes.outputs.publish == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
 
   deploy:
+    if: needs.build.outputs.publish == 'true'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
     steps:
       - name: Deploy to GitHub Pages

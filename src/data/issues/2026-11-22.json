@@ -1,0 +1,225 @@
+{
+  "date": "2026-11-22",
+  "title": "2026 小米影像大赛 · 国内",
+  "edition": "domestic",
+  "status": "published",
+  "sourceUrl": "https://www.mi.com/visual/award/winWorks",
+  "photos": [
+    {
+      "id": "xiaomi-9176726bae9ac743",
+      "name": "猫和帽子",
+      "userName": "Taras Bychko",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f77645b14c000162cf18-20d233cabc82406526b8f939"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/a87ff4ec_6d1f_4ecc_b6e9_f0075d0f0250.jpg?w=2329&h=3494",
+      "width": 2329,
+      "height": 3494,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/dc261bc8_72f1_4fe6_a0ee_055b7649e0fa.jpg?w=1280&h=1920",
+          "width": 1280
+        }
+      ],
+      "desc": "和猫的自拍。2026年5月。"
+    },
+    {
+      "id": "xiaomi-7216a848317d5aab",
+      "name": "守护者",
+      "userName": "Zeeco",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f77645b14c000162cf18-cb0066b882c4d24eaa00eb09"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/2fb415e9_b5a4_4734_88cd_8bbbe01c4975.jpg?w=1920&h=1440",
+      "width": 1920,
+      "height": 1440,
+      "desc": "一幅温柔而内敛的肖像，捕捉了一位乡村农妇与她的公鸡之间那份静默的尊严与不言而喻的情感联结。"
+    },
+    {
+      "id": "xiaomi-9b0aa6bbb8f5227d",
+      "name": "摊主",
+      "userName": "Ahmad Mansour",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f6fa45b14c000162cf17-9a887fad9902fd80f767d07f"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/0cec2cdb_5a59_4bc8_8bb3_55a7778dcd51.jpg?w=3727&h=2482",
+      "width": 3727,
+      "height": 2482,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/f733ed22_15da_4b7c_92c9_7b2a0669b4c5.jpg?w=1920&h=1279",
+          "width": 1920
+        }
+      ],
+      "desc": "破镜的倒影里，一个男人在摊售他的物件。"
+    },
+    {
+      "id": "xiaomi-a1f60ef8bcbc3a81",
+      "name": "光之冠",
+      "userName": "Krish Kliks",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f6fa45b14c000162cf17-584b3f6b6e889d4a48c0b151"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/1b51f98f_3b70_449d_bee5_dedd14edf0b5.jpg?w=3023&h=4080",
+      "width": 3023,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/5fd09c09_5875_4386_9b4a_568e8faa466f.jpg?w=1431&h=1920",
+          "width": 1431
+        }
+      ],
+      "desc": "阴影消退，光亮初现，真正的美在最安静的时刻绽放。"
+    },
+    {
+      "id": "xiaomi-9b92bdfa56caa9e4",
+      "name": "Night Journey",
+      "userName": "Arghyadip Sen",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f66d799ab5000156866a-b377f882f79e0e5f82c5e086"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/433db2bf_8e87_46b5_bb8b_77c55f320cd0.jpg?w=8000&h=6024",
+      "width": 8000,
+      "height": 6024,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/109be340_6b78_449b_bacf_31c6176b6902.jpg?w=1920&h=1445",
+          "width": 1920
+        }
+      ],
+      "desc": "夜间火车之旅的一个瞬间：同行的两位旅客正凝望着窗外，站台的灯光映在她们脸上。"
+    },
+    {
+      "id": "xiaomi-e5beac974f5bc68a",
+      "name": "走进灾后",
+      "userName": "Melvin C. Anore",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f66d799ab5000156866a-b067b38c37f16d07c65e0df5"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/87566bdc_c98d_47f7_bf9b_ed87e6192463.jpg?w=4800&h=3600",
+      "width": 4800,
+      "height": 3600,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/0d649a8c_59ce_481b_82c0_683f697321de.jpg?w=1920&h=1439",
+          "width": 1920
+        }
+      ],
+      "desc": "一个孤独的身影穿行于被大火吞噬的集市废墟之中；烟尘仍在黑暗中弥漫，沉寂与坚韧则久久不散。"
+    },
+    {
+      "id": "xiaomi-299786f91384566c",
+      "name": "震撼的夜晚",
+      "userName": "Andrea Zappia",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f4dd799ab50001568668-fb42c007d474d0da98398574"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/c5ae590e_dcba_42c2_8031_f05912d78308.jpg?w=1920&h=1438",
+      "width": 1920,
+      "height": 1438,
+      "desc": "法国阿尔卑斯山海拔2800米处，一个震撼的夜晚。"
+    },
+    {
+      "id": "xiaomi-e09dcdea5c0219be",
+      "name": "请各位上车",
+      "userName": "KrzysztofSzlęzak",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f56e45b14c000162cf15-64d1808a6bb15c394d0397e8"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/87a54706_d46b_4517_ab6e_81e563885223.jpg?w=1438&h=1920",
+      "width": 1438,
+      "height": 1920,
+      "desc": "在波兰华沙市中心，一名男子带着他的鸭子登上地铁，让原本平常的通勤变成了一幕意想不到的街头奇景。"
+    },
+    {
+      "id": "xiaomi-2ef33c4f8339c4b8",
+      "name": "夏日传送门",
+      "userName": "Olessya",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f3a845b14c000162cf13-1d86441a8ee29fcd75f86a6c"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/0d441070_7e01_4d12_8a83_839fe202ff68.jpg?w=2304&h=4096",
+      "width": 2304,
+      "height": 4096,
+      "desc": "透过一道光环，捕捉最后一缕夕阳。童年时期一个安静而超现实的黑白瞬间。"
+    },
+    {
+      "id": "xiaomi-55d917f77224d0d1",
+      "name": "雾与骑手",
+      "userName": "Dhiky",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f3a845b14c000162cf13-53d9419e2fc84419f7a099c1"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/30d06c6a_66d9_4d29_a869_a8ebf315d21a.jpg?w=4014&h=2676",
+      "width": 4014,
+      "height": 2676,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/460c0e19_b9fe_464c_8032_5082f076ee03.jpg?w=1920&h=1280",
+          "width": 1920
+        }
+      ],
+      "desc": "布罗莫火山的清晨，骑手们结伴前往火山口，迎接游客。"
+    },
+    {
+      "id": "xiaomi-3a39c6dec23488d9",
+      "name": "静谧的暖意",
+      "userName": "Mustafa Ahmed",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f11645b14c000162cf11-a6fff7094e69110b46c90090"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/8b3eff2e_1211_45b7_bfb7_261f0c60ee10.jpg?w=1920&h=1735",
+      "width": 1920,
+      "height": 1735,
+      "desc": "安静的房间里，光线轻柔地洒落，一段闲适的时光悄然展开。温暖、沉默与陪伴，便已足够。"
+    },
+    {
+      "id": "xiaomi-37a990340b42d988",
+      "name": "自然的羁绊",
+      "userName": "Min Chit Ko Ko",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6f053799ab50001568665-1fcd19e823c5ef6be32d7990"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/0833200c_9b64_4b23_9535_730e97b96b16.jpg?w=1409&h=1920",
+      "width": 1409,
+      "height": 1920,
+      "desc": "雾气弥漫的森林中，母亲温柔地拥抱着孩子，映照出爱、守护与自然沉静而坚韧的力量。在这里，每一个瞬间都无需言语，便已表达一切。"
+    },
+    {
+      "id": "xiaomi-dcab3d889d007716",
+      "name": "在陶窑里",
+      "userName": "Htin Lin",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6d1f0799ab50001b4dd80-7711dac91c0982a74b391385"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/d8624f98_926a_4bf4_b4ed_66899e1e18a8.jpg?w=9067&h=6800",
+      "width": 9067,
+      "height": 6800,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/0a4c0c45_61be_4f28_9e1d_c42fb6343118.jpg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "一位来自缅甸陶艺村的当地女性正在制作陶器。我用手机在低光环境下捕捉了这一瞬间。"
+    },
+    {
+      "id": "xiaomi-44df9eac04f32600",
+      "name": "尘与荣光",
+      "userName": "Ekrem Kalkan",
+      "sourceIds": [
+        "xiaomi-2026-domestic-6af6d0e9799ab50001b4dd7f-4b2dac7ddb07175762ef7afd"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/c067ae9c_b559_42a7_b4db_3c6514b071c3.jpg?w=2645&h=1984",
+      "width": 2645,
+      "height": 1984,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/22819374_587d_4468_9431_787715a029a3.jpg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "一个惊险的马术特技瞬间定格于腾空之际，扬起阵阵尘土，展现了传统骑术的魅力。"
+    }
+  ]
+}

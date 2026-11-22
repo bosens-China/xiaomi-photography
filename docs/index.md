@@ -7,8 +7,8 @@
 ## 维护
 
 - [周刊 JSON 格式](./issue-json.md)
-- [每周云端更新任务](./weekly-update-task.md)
+- [每周 CI 更新任务](./weekly-update-task.md)
 
-## 未来计划
+## 进行中的需求
 
-- [每周云端更新](./plans/weekly-cloud-update/PRD.md)
+- [每周 CI 更新](./work/weekly-cloud-update/PRD.md)
