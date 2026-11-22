@@ -24,10 +24,12 @@ export function usePhotoTransform(
       ? {
           width: `${frame.value.width}px`,
           height: `${frame.value.height}px`,
-          transform: `translate(-50%, -50%) translate(${value.value.x}px, ${value.value.y}px) scale(${value.value.scale})`,
         }
       : undefined,
   );
+  const imageStyle = computed(() => ({
+    transform: `translate(${value.value.x}px, ${value.value.y}px) scale(${value.value.scale})`,
+  }));
   let drag:
     | { x: number; y: number; left: number; top: number; id: number }
     | undefined;
@@ -227,6 +229,7 @@ export function usePhotoTransform(
   watch(identity, reset);
   return {
     frameStyle,
+    imageStyle,
     magnified,
     dragging,
     toggle,

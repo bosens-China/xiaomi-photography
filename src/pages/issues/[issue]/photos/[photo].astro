@@ -52,8 +52,8 @@ const back = `${isLatest ? homeUrl : issueUrl(date)}?from=photo`;
   description={item.desc || `${item.name} · ${item.userName}`}
   sourceUrl={sourceUrl}
 >
-  <main class="shell py-4 sm:py-7">
-    <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+  <main class="shell photo-detail py-4 sm:py-7">
+    <div class="photo-detail-bar flex flex-wrap items-center justify-between gap-3 mb-4">
       <a
         class="control"
         href={back}
@@ -85,3 +85,36 @@ const back = `${isLatest ? homeUrl : issueUrl(date)}?from=photo`;
     />
   </main>
 </Site>
+
+<style>
+  .photo-detail {
+    /* SSR fallback: site header, detail padding, back bar, margin, and borders. */
+    --photo-stage-top: calc(var(--header-height) + env(safe-area-inset-top) + 2rem + 38px);
+  }
+
+  @media (min-width: 640px) {
+    .photo-detail {
+      --photo-stage-top: calc(var(--header-height) + env(safe-area-inset-top) + 2.75rem + 38px);
+    }
+  }
+</style>
+
+<script>
+  const detail = document.querySelector<HTMLElement>('.photo-detail');
+  const stage = detail?.querySelector<HTMLElement>('[data-photo-stage]');
+  const bar = detail?.querySelector<HTMLElement>('.photo-detail-bar');
+  const header = document.querySelector<HTMLElement>('.site-header');
+
+  if (detail && stage && bar && header) {
+    const updateStageTop = () => {
+      const top = stage.getBoundingClientRect().top + window.scrollY;
+      detail.style.setProperty('--photo-stage-top', `${top}px`);
+    };
+    // Observe the chrome, not the stage whose height we are about to change.
+    const observer = new ResizeObserver(updateStageTop);
+    observer.observe(header);
+    observer.observe(bar);
+    window.addEventListener('resize', updateStageTop);
+    updateStageTop();
+  }
+</script>

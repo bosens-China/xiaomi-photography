@@ -14,6 +14,7 @@ const stage = useTemplateRef<HTMLDivElement>('stage');
 let touchPinching = false;
 const {
   frameStyle,
+  imageStyle,
   magnified,
   dragging,
   toggle,
@@ -79,6 +80,7 @@ function onTouchEnd(event: TouchEvent) {
   <div
     ref="stage"
     class="stage"
+    data-photo-stage
     :class="{ 'is-magnified': magnified, 'is-dragging': dragging }"
     :style="{ '--aspect': (photo.width || 4) / (photo.height || 3) }"
     tabindex="0"
@@ -97,12 +99,14 @@ function onTouchEnd(event: TouchEvent) {
     @touchend.passive="onTouchEnd"
     @touchcancel="cancelTouch"
   >
-    <div
-      class="photo-frame"
-      :style="frameStyle"
-      :class="{ 'is-monochrome': monochrome }"
-    >
-      <PhotoImage :photo="photo" original eager />
+    <div class="photo-frame" :style="frameStyle">
+      <div
+        class="photo-content"
+        :style="imageStyle"
+        :class="{ 'is-monochrome': monochrome }"
+      >
+        <PhotoImage :photo="photo" original eager />
+      </div>
 
       <!-- 构图辅助网格 SVG 叠加层（带暗色衬底+亮色细线，深浅画面均清晰可见） -->
       <svg
@@ -206,11 +210,17 @@ function onTouchEnd(event: TouchEvent) {
   transform: translate(-50%, -50%);
 }
 
-.photo-frame.is-monochrome :deep(img) {
+.photo-content {
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+}
+
+.photo-content.is-monochrome :deep(img) {
   filter: grayscale(100%) contrast(1.04);
 }
 
-.photo-frame > :first-child {
+.photo-content > :first-child {
   background: var(--stage);
 }
 
@@ -237,19 +247,11 @@ function onTouchEnd(event: TouchEvent) {
   stroke-width: 1px;
 }
 
-@media (max-width: 899px) {
+@media (max-width: 960px) {
   .stage {
-    --view-height: clamp(280px, 56dvh, 630px);
-    height: auto;
-    min-height: min(220px, var(--view-height));
-    max-height: var(--view-height);
-    aspect-ratio: var(--aspect, 4 / 3);
-  }
-}
-
-@media (max-width: 639px) {
-  .stage {
-    --view-height: clamp(235px, 54dvh, 490px);
+    height: max(4rem, calc(100vh - var(--photo-stage-top) - env(safe-area-inset-bottom)));
+    /* The small viewport is stable when Safari’s browser controls appear/disappear. */
+    height: max(4rem, calc(100svh - var(--photo-stage-top) - env(safe-area-inset-bottom)));
   }
 }
 </style>
