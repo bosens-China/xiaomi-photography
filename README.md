@@ -1,51 +1,18 @@
 # 光影集
 
-用于浏览国内与国际摄影作品、学习构图的个人画廊。Astro 静态生成首页、周刊和作品详情，Vue 查看器提供构图辅助线、连续缩放和平移及切图。站点支持桌面、平板和手机 H5，浅色和深色模式默认跟随系统。
+光影集是一个摄影周刊，收录小米影像大赛的国内与国际获奖作品。你可以查看原图，用构图辅助线观察画面。
+
+[在线浏览](https://bosens-china.github.io/xiaomi-photography/) · [项目文档](docs/index.md)
 
 ## 本地运行
 
-使用 Node.js 22.12 及以上版本和项目锁定的 pnpm 10。
+需要 Node.js 22.12 或更高版本和 pnpm 10。
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm dev
 ```
 
-`pnpm build` 校验周刊 JSON、检查类型并生成静态网页。GitHub Pages 部署路径是 `/xiaomi-photography/`。
+## 许可证
 
-自动部署仅使用 GitHub Pages，关闭 Vercel Git 自动部署和 CodeRabbit 自动 PR 审查。JSON 可直接提交到 `main` 并触发构建发布；Release Please 的版本发布 PR 单独管理版本号、CHANGELOG 和 GitHub Release，不是内容上线的前置条件。
-
-## 自动更新
-
-GitHub Actions 每周一北京时间 07:00 检查国内、国际官方获奖作品。推送到 `main` 或手动运行也会检查。有新作品时按北京时间当周周一补建或更新周刊，再验证、提交并发布。
-
-```sh
-pnpm sync:issues --dry-run # 只查看预计更新
-pnpm sync:issues           # 实际更新 JSON
-```
-
-抓取范围、失败处理和首次启用方式见[每周 CI 更新任务](docs/weekly-update-task.md)。
-
-## 发布周刊
-
-1. 按[周刊 JSON 格式](docs/issue-json.md)在 `src/data/issues/` 新增或更新以北京时间当周周一命名的 `YYYY-MM-DD.json`。
-2. 本地运行 `pnpm build` 验证，随后提交并推送到 `main`。
-3. GitHub Actions 根据仓库里的 JSON 构建并发布到 GitHub Pages。
-
-首页按日期倒序展示各期国内与国际版。保留在目录中的文件会继续出现在周刊切换菜单。仓库保存图片 URL、尺寸和作品信息，国内与国际版分别取自[小米国内获奖页](https://www.mi.com/visual/award/winWorks)和[小米国际获奖页](https://event.mi.com/global/xiaomiImageryawards/award-works)。
-
-产品行为见[项目文档](docs/index.md)。
-
-## 协议
-
-MIT License
-
-## 详情画布交互
-
-详情直接加载 `picUrl` 原图（列表仍按响应式缩略图加载），每张作品从完整居中适配开始；缩放和平移不跨作品保存。网格与黑白偏好仍保留。
-
-桌面鼠标/触控板在画布内捏合或 Ctrl + 滚轮连续缩放（适配倍率 1–8 倍），双击以鼠标位置放大一档，再双击复位。适配时普通滚轮滚动页面；放大后普通滚轮或鼠标拖拽平移。网格随照片一起变换。
-
-键盘 Z 放大/复位；聚焦画布后 + / - 缩放、0 复位，放大后方向键平移，适配时左右键仍切图。手机和平板可在画布内双指捏合缩放、双点放大或复位。完整适配时单指上下滚动页面、左右滑动切图，放大后单指拖动照片。画布之外仍使用浏览器原生手势。打开原图链接仍可查看或另存原文件。
-
-运行 `pnpm test` 验证适配尺寸、鼠标锚点与平移边界；`pnpm build` 执行类型检查并构建所有静态页面。
+[MIT](License)
