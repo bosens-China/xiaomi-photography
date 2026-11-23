@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.4.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.3.0...v1.4.0) (2026-11-23)
+
+
+### Features
+
+* display domestic and international photography editions by date ([9be8e26](https://github.com/bosens-China/xiaomi-photography/commit/9be8e2649394774c344a249e7adedb50dfb7daf4))
+* 合并周刊日期与国内国际切换入口 ([81cbb52](https://github.com/bosens-China/xiaomi-photography/commit/81cbb52eda5d555521891d0c9882fe4d4d0bd2e3))
+* 统一摄影周刊的周一归档 ([94c1b86](https://github.com/bosens-China/xiaomi-photography/commit/94c1b86efc410010799a9e1d9156bd982a4c261d))
+* 自动同步小米摄影作品并补齐双版图片 ([aa3484b](https://github.com/bosens-China/xiaomi-photography/commit/aa3484b59879a48880c50eb837ade285fcff5465))
+
+
+### Bug Fixes
+
+* fit composition guides to the visible photo area ([61235f7](https://github.com/bosens-China/xiaomi-photography/commit/61235f7407e4ff31c366d5cf1c5130bc3121f3f3))
+* keep composition guides aligned to the photo while zooming ([08dd806](https://github.com/bosens-China/xiaomi-photography/commit/08dd8061883ccc4ee3c653a413a0f89f0abb0b79))
+* keep composition guides fixed while the photo moves ([04b05db](https://github.com/bosens-China/xiaomi-photography/commit/04b05db6b49652e5b22ebbc975e34b32c33abd97))
+* make photo detail zoom fit-first ([64d534d](https://github.com/bosens-China/xiaomi-photography/commit/64d534d14d49fe1c5b569c2eb0315424f92e2521))
+* maximize mobile photo canvas and pin composition guides ([8fd782d](https://github.com/bosens-China/xiaomi-photography/commit/8fd782d9e1c45473c8f6f702830d144c8597cba2))
+* support touch zoom and show photo loading state ([2ff38c1](https://github.com/bosens-China/xiaomi-photography/commit/2ff38c18a87f38f2d41df0692d6a20880985de70))
+
 ## [1.3.0](https://github.com/bosens-China/xiaomi-photography/compare/v1.2.1...v1.3.0) (2026-11-21)
 
 
