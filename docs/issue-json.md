@@ -1,12 +1,12 @@
 # 周刊 JSON 格式
 
-每个发布日期可并排展示国内版和国际版。国内版使用 `src/data/issues/YYYY-MM-DD.json`，国际版使用 `src/data/issues/YYYY-MM-DD-international.json`。国内、国际指官方来源，不按摄影师国籍拆分，允许跨版收录相同作品。两份文件的 `date` 相同；国际版必须显式标为 `edition: "international"`。这样的地址设计保留已有国内版和作品链接。首页以日期倒序排列；只有一版的旧期仍可浏览。
+同一周以北京时间周一为期次日期，可并排展示国内版和国际版。国内版使用 `src/data/issues/YYYY-MM-DD.json`，国际版使用 `src/data/issues/YYYY-MM-DD-international.json`。国内、国际指官方来源，不按摄影师国籍拆分，允许跨版收录相同作品。两份文件的 `date` 相同；国际版必须显式标为 `edition: "international"`。首页以日期倒序排列；只有一版的期次也可浏览。
 
 ## 周刊
 
 | 字段 | 类型 | 用途 |
 | --- | --- | --- |
-| `date` | 字符串，必填 | 发布日期，格式为 `YYYY-MM-DD` |
+| `date` | 字符串，必填 | 期次日期，格式为 `YYYY-MM-DD` |
 | `title` | 字符串，必填 | 本期标题 |
 | `sourceUrl` | HTTPS URL，可选 | 本期官方出处或来源链接 |
 | `edition` | `domestic` / `international` | 省略视为国内版 |
@@ -41,9 +41,9 @@
 
 ```json
 {
-  "date": "2026-11-21",
-  "title": "2026 小米徕卡全球影像大赛 · 中国获奖作品",
-  "sourceUrl": "https://eu-imagery.event.mi.com/eu/xiaomiImageryawards/award-works",
+  "date": "2026-11-16",
+  "title": "2026 小米徕卡全球影像大赛 · 国内",
+  "sourceUrl": "https://www.mi.com/visual/award/winWorks",
   "photos": [
     {
       "id": "exclusive",
@@ -63,11 +63,11 @@
 }
 ```
 
-外链版示例（文件名 `2026-11-21-international.json`；标题和署名为占位示例）：
+外链版示例（文件名 `2026-11-16-international.json`；标题和署名为占位示例）：
 
 ```json
 {
-  "date": "2026-11-21",
+  "date": "2026-11-16",
   "edition": "international",
   "status": "external",
   "title": "小米影像大赛国际获奖作品",

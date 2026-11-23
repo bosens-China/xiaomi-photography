@@ -25,16 +25,21 @@ type RecordEntry =
   | IssueData['photos'][number]
   | NonNullable<IssueData['entries']>[number];
 
-export function shanghaiDate(now = new Date()): string {
+export function shanghaiWeekStart(now = new Date()): string {
   const parts = new Intl.DateTimeFormat('en-CA', {
     timeZone: 'Asia/Shanghai',
     year: 'numeric',
     month: '2-digit',
     day: '2-digit',
   }).formatToParts(now);
-  return ['year', 'month', 'day']
+  const date = ['year', 'month', 'day']
     .map((type) => parts.find((part) => part.type === type)!.value)
     .join('-');
+  // 用 UTC 计算已经换算出的北京日历日期，避免受到运行机器时区影响。
+  const monday = new Date(`${date}T00:00:00Z`);
+  const daysSinceMonday = (monday.getUTCDay() + 6) % 7;
+  monday.setUTCDate(monday.getUTCDate() - daysSinceMonday);
+  return monday.toISOString().slice(0, 10);
 }
 
 function makePhoto(work: OfficialWork): IssueData['photos'][number] {
@@ -226,9 +231,9 @@ export async function syncIssues(
   loadSources: () => Promise<EditionSource[]> = fetchSources,
   dryRun = false,
 ) {
+  const date = shanghaiWeekStart();
   const archive = await readArchive(directory);
   const sources = await hydratePhotos(await loadSources(), archive.values());
-  const date = shanghaiDate();
   const changes = planUpdates(archive, sources, date);
   if (!dryRun) await writeUpdates(directory, changes);
   return {

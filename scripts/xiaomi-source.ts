@@ -217,12 +217,27 @@ async function request(url: string, init: RequestInit = {}): Promise<string> {
   throw new Error('请求失败');
 }
 
+export function internationalYear(html: string, script: string): string {
+  const pageYear = html.match(
+    /<title>[^<]*Awards\s*(20\d{2})\b[^<]*<\/title>/i,
+  )?.[1];
+  if (pageYear) return pageYear;
+
+  // HTML 可能只返回占位标题，脚本里的 Global 标题与其他地区的旧届标题并存。
+  const years = new Set(
+    Array.from(
+      script.matchAll(
+        /\bmeta_title["']?\s*:\s*["']Xiaomi\s*Imagery\s*Global\s*Awards\s*(20\d{2})["']/gi,
+      ),
+      (match) => match[1],
+    ),
+  );
+  if (years.size !== 1) throw new Error('无法确定国际赛事年份');
+  return [...years][0];
+}
+
 export async function fetchSources(): Promise<EditionSource[]> {
   const internationalHtml = await request(sourceUrls.international);
-  const year = internationalHtml.match(
-    /<title>[^<]*Awards(20\d{2})[^<]*<\/title>/i,
-  )?.[1];
-  if (!year) throw new Error('无法确定国际赛事年份');
   const url = scriptUrls(internationalHtml, sourceUrls.international).find(
     (value) => {
       const parsed = new URL(value);
@@ -233,10 +248,11 @@ export async function fetchSources(): Promise<EditionSource[]> {
     },
   );
   if (!url) throw new Error('国际获奖页面的脚本地址已变化');
+  const internationalScript = await request(url);
   const international = parseRows(
-    parseAwardScript(await request(url)),
+    parseAwardScript(internationalScript),
     'international',
-    year,
+    internationalYear(internationalHtml, internationalScript),
   );
 
   const domesticHtml = await request(sourceUrls.domestic);

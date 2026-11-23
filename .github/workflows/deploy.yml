@@ -37,6 +37,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
 
       - uses: pnpm/action-setup@v3
@@ -51,15 +52,26 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Sync Xiaomi awards
-        if: github.event_name != 'push'
-        run: pnpm sync:issues
+        id: sync
+        continue-on-error: ${{ github.event_name == 'push' }}
+        run: |
+          summary=$(pnpm --silent sync:issues)
+          printf '%s\n' "$summary"
+          week=$(printf '%s\n' "$summary" | jq -er '.date')
+          echo "week=$week" >> "$GITHUB_OUTPUT"
 
       - name: Check content changes
         id: changes
         shell: bash
+        env:
+          SYNC_OUTCOME: ${{ steps.sync.outcome }}
         run: |
           changed=false
           if [[ -n "$(git status --porcelain -- src/data/issues)" ]]; then
+            if [[ "$SYNC_OUTCOME" != success ]]; then
+              echo "Weekly sync failed after changing issue files." >&2
+              exit 1
+            fi
             changed=true
           fi
           publish=false
@@ -81,11 +93,13 @@ jobs:
 
       - name: Commit validated content
         if: steps.changes.outputs.changed == 'true'
+        env:
+          ISSUE_WEEK: ${{ steps.sync.outputs.week }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -- src/data/issues/*.json
-          git commit -m "chore(content): sync Xiaomi photography $(TZ=Asia/Shanghai date +%F)"
+          git commit -m "chore(content): sync Xiaomi photography $ISSUE_WEEK"
           git push origin HEAD:main
 
       - name: Upload artifact

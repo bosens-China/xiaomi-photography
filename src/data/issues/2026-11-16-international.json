@@ -1,10 +1,250 @@
 {
-  "date": "2026-11-22",
-  "title": "2026 小米影像大赛 · 国际",
+  "date": "2026-11-16",
+  "title": "2026 小米徕卡全球影像大赛 · 国际",
   "edition": "international",
   "status": "published",
   "sourceUrl": "https://event.mi.com/global/xiaomiImageryawards/award-works",
   "photos": [
+    {
+      "id": "xiaomi-c5611fd0b147ccce",
+      "name": "Cat and Hat",
+      "userName": "Taras Bychko",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02049ba786a0001d90f58-ff500b4f95619b9c4fba1709"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/7705585a_05ba_494d_8b76_b76364224e39.jpeg?w=2329&h=3494",
+      "width": 2329,
+      "height": 3494,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/27d1090b_56be_4548_a3f1_e5692c048621.jpeg?w=1280&h=1920",
+          "width": 1280
+        }
+      ],
+      "desc": "Self-Portrait with Cat. May 2026"
+    },
+    {
+      "id": "xiaomi-3fedb984e65ce7ce",
+      "name": "The Keeper",
+      "userName": "Zeeco",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02049ba786a0001d90f58-4475c43635ee1c1d22801994"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/9c6169df_e765_4e19_a536_476664d429c0.jpeg?w=6000&h=4500",
+      "width": 6000,
+      "height": 4500,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/74eeb8cd_a7a9_43c8_8e19_737f092940a3.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "A tender, low-key portrait capturing the quiet dignity and unspoken bond between a rural farmer and her rooster."
+    },
+    {
+      "id": "xiaomi-45565a56bb4fe4b5",
+      "name": "The Seller",
+      "userName": "Ahmad Mansour",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae020fbba786a0001d90f59-ff4ecbcb4d8550f4fbb1cc38"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/190fc16a_9f17_4444_8c40_f1a0089728da.jpeg?w=1920&h=1279",
+      "width": 1920,
+      "height": 1279,
+      "desc": "In the reflection of a broken mirror there is a guy selling his stuff"
+    },
+    {
+      "id": "xiaomi-9b15f46c05f47ebe",
+      "name": "Crown of Light",
+      "userName": "Krish Kliks",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae020fbba786a0001d90f59-9cc2629fefd75021421b00bf"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/93ea9cb3_69cb_4c7d_a260_65315ead8768.jpeg?w=3023&h=4080",
+      "width": 3023,
+      "height": 4080,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/46ed5958_e94b_4cfa_9871_30214a83d7e9.jpeg?w=1431&h=1920",
+          "width": 1431
+        }
+      ],
+      "desc": "Where shadows end and light begins, true beauty thrives in the quietest moments"
+    },
+    {
+      "id": "xiaomi-27a9e42ce1bfa655",
+      "name": "Night Journey",
+      "userName": "Arghyadip Sen",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02142ce8ad00001f6b068-54111a50726ffd9e5e00969e"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/345cb071_923a_4f4e_bd8a_9d02633ba835.jpeg?w=8000&h=6024",
+      "width": 8000,
+      "height": 6024,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/09e36e2e_6174_47cc_8945_0397b5d5bf63.jpeg?w=1920&h=1445",
+          "width": 1920
+        }
+      ],
+      "desc": "Moment from a night journey by train, when two my co-travellers were looking outside the window, and their faces lit with platform-light."
+    },
+    {
+      "id": "xiaomi-c8c4869931067e3e",
+      "name": "Into the Aftermath",
+      "userName": "Melvin C. Anore",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02142ce8ad00001f6b068-977deccc75e002ab425c1132"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3b773bb3_b5f0_4d4c_94d2_2d58018f9958.jpeg?w=4800&h=3600",
+      "width": 4800,
+      "height": 3600,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/48ac6b1d_cf06_41d1_adab_7b0c1d7372c9.jpeg?w=1920&h=1439",
+          "width": 1920
+        }
+      ],
+      "desc": "A lone figure walks through the ruins of a market consumed by fire, where smoke, silence, and resilience linger in the dark."
+    },
+    {
+      "id": "xiaomi-9d8b32b0dc2ad48e",
+      "name": "Epic night",
+      "userName": "Andrea Zappia",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae021aeba786a0001d90f5b-572f1fd192aeb9189c9d1db5"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/5bc55f80_68c0_4d37_99c8_fad6c97214dc.jpeg?w=4080&h=3056",
+      "width": 4080,
+      "height": 3056,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/4d200275_45d8_4012_acd8_f7240368bf4d.jpeg?w=1920&h=1438",
+          "width": 1920
+        }
+      ],
+      "desc": "Epic night at 2,800 meters in the French Alps"
+    },
+    {
+      "id": "xiaomi-c8e2255327bbe5ad",
+      "name": "All Aboard.",
+      "userName": "Krzysztof Szlęzak",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02448ce8ad00001f6b069-14b595ba621ae9c1e96a3790"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/e45c2638_7b56_43d3_9e7f_99f415587768.jpeg?w=2402&h=3207",
+      "width": 2402,
+      "height": 3207,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/f79ebca4_5ccf_4734_9c0a_b971e78afca5.jpeg?w=1438&h=1920",
+          "width": 1438
+        }
+      ],
+      "desc": "A man boards the metro in central Warsaw, Poland, with his ducks, turning an ordinary commute into an unlikely street scene."
+    },
+    {
+      "id": "xiaomi-1227107bf76e6081",
+      "name": "Summer Portal",
+      "userName": "Olessya Mikhailova",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae0238dba786a0001d90f60-851615179f441bacfa341d24"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3869d813_7d74_4fcf_aa50_168a4c1e9e2c.jpeg?w=2304&h=4096",
+      "width": 2304,
+      "height": 4096,
+      "desc": "Catching the last rays of sun through a ring of light. A quiet, surreal black-and-white moment of childhood."
+    },
+    {
+      "id": "xiaomi-dd7b99f6b30dc777",
+      "name": "Fog and the Horseman",
+      "userName": "Dhiky",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae0238dba786a0001d90f60-fac11dbb7ee63e80de540521"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/3fad6677_a331_48b0_9aa9_8abf397d7ca3.jpeg?w=4014&h=2676",
+      "width": 4014,
+      "height": 2676,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/87a4ed2d_efbd_4fa5_a0d8_9f32ae2c8bfa.jpeg?w=1920&h=1280",
+          "width": 1920
+        }
+      ],
+      "desc": "On a morning at Bromo, horsemen walk together toward the Bromo crater to greet tourists."
+    },
+    {
+      "id": "xiaomi-c7fad4539ab7ee5e",
+      "name": "Quiet Warmth",
+      "userName": "Mustafa Ahmed",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae042e9ce8ad00001f6b06b-2ef3a186ff782f308cfc2735"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/586b2e2b_e7ec_483d_929f_999663b6ae73.jpeg?w=3320&h=3000",
+      "width": 3320,
+      "height": 3000,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/011b95b5_6a72_4fbe_bd3e_dfd762a3eb3e.jpeg?w=1920&h=1735",
+          "width": 1920
+        }
+      ],
+      "desc": "In a quiet room, light falls gently as a moment of rest unfolds—where warmth, silence, and presence become enough."
+    },
+    {
+      "id": "xiaomi-6ea062b23f2f8750",
+      "name": "Bound by Nature",
+      "userName": "Min Chit Ko Ko",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae042ddce8ad00001f6b06a-87edca7095d017ff0781c6f8"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/35b06e10_bae2_49b7_84b1_9d9e2cd73c23.jpeg?w=2632&h=3587",
+      "width": 2632,
+      "height": 3587,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/04cfe2e9_9269_429d_b93b_0a7c95a9c1ad.jpeg?w=1409&h=1920",
+          "width": 1409
+        }
+      ],
+      "desc": "A mother's gentle embrace in the misty forest reflects love, protection and the quiet strength of nature, where every moment speaks without."
+    },
+    {
+      "id": "xiaomi-417048f069a56617",
+      "name": "In the Pottery Oven",
+      "userName": "Htin Lin",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02325ba786a0001d90f5e-7b01cd1be67fab6674a5c68f"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/dd725885_70c6_47a0_8ba5_ae9e19415ea3.jpeg?w=9067&h=6800",
+      "width": 9067,
+      "height": 6800,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/7a8120ca_c590_4c60_a0ea_0da0a698f44e.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "The local woman from the pottery village of Myanmar was working pottery work. I captured this low light photo with mobile phone camera"
+    },
+    {
+      "id": "xiaomi-7dc8e9479102be11",
+      "name": "Dust and Glory",
+      "userName": "Ekrem Kalkan",
+      "sourceIds": [
+        "xiaomi-2026-international-6ae02250ba786a0001d90f5d-cfb91f78cc5f5759656bb8a4"
+      ],
+      "picUrl": "https://img.youpin.mi-img.com/ferriswheel/1481541a_3b4a_4c8a_84ce_2c79257eb7e0.jpeg?w=2645&h=1984",
+      "width": 2645,
+      "height": 1984,
+      "variants": [
+        {
+          "url": "https://img.youpin.mi-img.com/ferriswheel/0e80461a_a6d8_425d_9572_ff55d582cc11.jpeg?w=1920&h=1440",
+          "width": 1920
+        }
+      ],
+      "desc": "A dramatic equestrian acrobatic moment captured in mid-air, raising dust and celebrating traditional horsemans"
+    },
     {
       "id": "xiaomi-af28a35884ba53cc",
       "name": "The Boy in Black",

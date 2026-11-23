@@ -7,11 +7,12 @@ import { issueSchema, type IssueData } from '../src/lib/issue-schema.ts';
 import {
   planUpdates,
   readArchive,
-  shanghaiDate,
+  shanghaiWeekStart,
   syncIssues,
   writeUpdates,
 } from '../scripts/sync-issues.ts';
 import {
+  internationalYear,
   parseAwardScript,
   parseRows,
   scriptUrls,
@@ -158,6 +159,30 @@ test('script URL discovery resolves protocol-relative URLs and keeps the last ca
   );
 });
 
+test('a placeholder international title uses the Global award year from the bundle', () => {
+  const placeholder = '<title>meta title</title>';
+  const bundle =
+    'en:{meta_title:"Xiaomi Imagery Awards 2025"},global:{meta_title:"XiaomiImageryGlobalAwards2026"}';
+  assert.equal(internationalYear(placeholder, bundle), '2026');
+  assert.equal(
+    internationalYear('<title>Xiaomi Imagery Awards2027</title>', ''),
+    '2027',
+  );
+  assert.throws(
+    () =>
+      internationalYear(placeholder, 'meta_title:"Xiaomi Imagery Awards 2025"'),
+    /无法确定国际赛事年份/,
+  );
+  assert.throws(
+    () =>
+      internationalYear(
+        placeholder,
+        `${bundle};meta_title:"XiaomiImageryGlobalAwards2027"`,
+      ),
+    /无法确定国际赛事年份/,
+  );
+});
+
 test('first sync adopts old records without duplicating them and a second run is unchanged', () => {
   const initial = archive();
   const changes = planUpdates(initial, sources(), '2026-11-22');
@@ -190,17 +215,24 @@ test('stable official identity corrects title and author in the original issue',
   assert.equal(issue.photos[0].userName, '更正署名');
 });
 
-test('new work creates a photo incremental issue and an empty sibling without copying history', () => {
+test('a quiet Monday can be backfilled and expanded later in the same Beijing week', () => {
   const initial = new Map([
     ...archive(),
     ...planUpdates(archive(), sources(), '2026-11-22'),
   ]);
+  const monday = shanghaiWeekStart(new Date('2026-11-22T23:00:00Z'));
+  assert.equal(planUpdates(initial, sources(), monday).size, 0);
+
   const added = {
     ...work('新作品'),
     sourceIds: ['xiaomi-2026-domestic-new-0'],
   };
-  const changes = planUpdates(initial, sources([work(), added]), '2026-11-23');
-  assert.equal(changes.size, 2);
+  const thursday = shanghaiWeekStart(new Date('2026-11-26T08:00:00Z'));
+  const changes = planUpdates(initial, sources([work(), added]), thursday);
+  assert.deepEqual(
+    [...changes.keys()],
+    ['2026-11-23.json', '2026-11-23-international.json'],
+  );
   const domestic = changes.get('2026-11-23.json')!;
   assert.equal(domestic.status, 'published');
   assert.equal(domestic.photos.length, 1);
@@ -210,19 +242,21 @@ test('new work creates a photo incremental issue and an empty sibling without co
   );
   assert.equal(changes.get('2026-11-23-international.json')!.status, 'empty');
   const next = new Map([...initial, ...changes]);
-  assert.equal(
-    planUpdates(next, sources([work(), added]), '2026-11-24').size,
-    0,
-  );
+  const friday = shanghaiWeekStart(new Date('2026-11-27T08:00:00Z'));
+  assert.equal(planUpdates(next, sources([work(), added]), friday).size, 0);
   const another = {
     ...work('另一个作品'),
     sourceIds: ['xiaomi-2026-domestic-another-0'],
   };
+  const updated = planUpdates(next, sources([work(), added, another]), friday);
+  assert.deepEqual([...updated.keys()], ['2026-11-23.json']);
+  assert.deepEqual(
+    updated.get('2026-11-23.json')!.photos.map(({ name }) => name),
+    ['新作品', '另一个作品'],
+  );
   assert.equal(
-    planUpdates(next, sources([work(), added, another]), '2026-11-23').get(
-      '2026-11-23.json',
-    )!.photos.length,
-    2,
+    updated.get('2026-11-23.json')!.photos[0].id,
+    domestic.photos[0].id,
   );
 });
 
@@ -292,9 +326,19 @@ test('file writes validate the whole batch before replacement and preserve origi
   }
 });
 
-test('publication date uses Beijing time across the UTC Sunday boundary', () => {
-  assert.equal(shanghaiDate(new Date('2026-11-22T23:00:00Z')), '2026-11-23');
-  assert.equal(shanghaiDate(new Date('2026-11-22T15:59:59Z')), '2026-11-22');
+test('weekly publication rolls over at Beijing Monday midnight and can span years', () => {
+  assert.equal(
+    shanghaiWeekStart(new Date('2026-11-22T16:00:00Z')),
+    '2026-11-23',
+  );
+  assert.equal(
+    shanghaiWeekStart(new Date('2026-11-22T15:59:59Z')),
+    '2026-11-16',
+  );
+  assert.equal(
+    shanghaiWeekStart(new Date('2027-01-01T01:00:00Z')),
+    '2026-12-28',
+  );
 });
 
 test('official work identity survives row reordering and CDN query changes', () => {

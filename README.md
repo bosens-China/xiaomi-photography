@@ -17,7 +17,7 @@ pnpm dev
 
 ## 自动更新
 
-GitHub Actions 每周一北京时间 07:00 检查国内、国际官方获奖作品，有变化时更新 JSON、验证构建并提交发布。手动运行工作流可以同步并重新部署。
+GitHub Actions 每周一北京时间 07:00 检查国内、国际官方获奖作品。推送到 `main` 或手动运行也会检查。有新作品时按北京时间当周周一补建或更新周刊，再验证、提交并发布。
 
 ```sh
 pnpm sync:issues --dry-run # 只查看预计更新
@@ -28,11 +28,11 @@ pnpm sync:issues           # 实际更新 JSON
 
 ## 发布周刊
 
-1. 按[周刊 JSON 格式](docs/issue-json.md)在 `src/data/issues/` 新增 `YYYY-MM-DD.json`。
+1. 按[周刊 JSON 格式](docs/issue-json.md)在 `src/data/issues/` 新增或更新以北京时间当周周一命名的 `YYYY-MM-DD.json`。
 2. 本地运行 `pnpm build` 验证，随后提交并推送到 `main`。
 3. GitHub Actions 根据仓库里的 JSON 构建并发布到 GitHub Pages。
 
-首页按日期倒序展示各期国内与国际版。保留在目录中的文件会继续出现在周刊切换菜单。仓库保存图片 URL、尺寸和作品信息，已展示的首期来源为[小米徕卡全球影像大赛 2026 官方获奖页](https://eu-imagery.event.mi.com/eu/xiaomiImageryawards/award-works)。
+首页按日期倒序展示各期国内与国际版。保留在目录中的文件会继续出现在周刊切换菜单。仓库保存图片 URL、尺寸和作品信息，国内与国际版分别取自[小米国内获奖页](https://www.mi.com/visual/award/winWorks)和[小米国际获奖页](https://event.mi.com/global/xiaomiImageryawards/award-works)。
 
 产品行为见[项目文档](docs/index.md)。
 
